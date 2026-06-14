@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ali Mert Tekin — Prompt Kütüphanesi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue: #1a6fe8;
+    --green: #0fb97a;
+    --grad: linear-gradient(135deg, #1a6fe8 0%, #0fb97a 100%);
+    --bg: #f7f9fc;
+    --surface: #ffffff;
+    --text: #111827;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo-badge {
+    background: var(--grad);
+    border-radius: 8px;
+    padding: 6px 14px;
+  }
+
+  .logo-badge span {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: #fff;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  .header-count {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .header-count b { color: var(--blue); }
+
+  /* ── HERO ── */
+  .hero {
+    text-align: center;
+    padding: 56px 24px 40px;
+  }
+
+  .hero h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(26px, 5vw, 40px);
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .hero h1 span {
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 480px;
+    margin: 0 auto 28px;
+    line-height: 1.7;
+  }
+
+  /* ── SEARCH ── */
+  .search-wrap {
+    position: relative;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .search-wrap input {
+    width: 100%;
+    padding: 12px 16px 12px 44px;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    font-size: 15px;
+    background: var(--surface);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .search-wrap input:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(26,111,232,0.1);
+  }
+
+  .search-wrap .s-ico {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: 18px;
+    pointer-events: none;
+  }
+
+  /* ── FILTERS ── */
+  .filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0 24px 24px;
+  }
+
+  .fb {
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    font-size: 13px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .fb.active, .fb:hover {
+    background: var(--grad);
+    color: #fff;
+    border-color: transparent;
+  }
+
+  /* ── GRID ── */
+  .container {
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  .stats {
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  .stats b { color: var(--blue); }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.2s, transform 0.15s;
+  }
+
+  .card:hover {
+    box-shadow: 0 8px 32px rgba(26,111,232,0.12);
+    transform: translateY(-3px);
+  }
+
+  .card-img {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    cursor: zoom-in;
+    background: #f3f4f6;
+  }
+
+  .card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s;
+    display: block;
+  }
+
+  .card:hover .card-img img { transform: scale(1.05); }
+
+  .img-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0);
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card:hover .img-overlay { background: rgba(0,0,0,0.2); }
+
+  .zoom-icon {
+    color: #fff;
+    font-size: 28px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .card:hover .zoom-icon { opacity: 1; }
+
+  .cat-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.93);
+    backdrop-filter: blur(6px);
+  }
+
+  .cat-badge.chatgpt { color: #0a9e67; }
+  .cat-badge.gorsel  { color: #1a6fe8; }
+  .cat-badge.minecraft { color: #7c3aed; }
+
+  .new-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 20px;
+    background: var(--grad);
+    color: #fff;
+    letter-spacing: 0.04em;
+  }
+
+  .card-body {
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .ai-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .card-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 7px;
+  }
+
+  .card-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 14px;
+    flex: 1;
+  }
+
+  /* ── PROMPT BOX ── */
+  .prompt-box {
+    background: #f3f6fa;
+    border-left: 3px solid var(--blue);
+    border-radius: 0 8px 8px 0;
+    padding: 11px 13px;
+    font-size: 12px;
+    color: #334155;
+    line-height: 1.75;
+    font-family: 'Courier New', monospace;
+    margin-bottom: 13px;
+    max-height: 96px;
+    overflow: hidden;
+    position: relative;
+    transition: max-height 0.4s ease;
+  }
+
+  .prompt-box.expanded { max-height: 800px; }
+
+  .prompt-box:not(.expanded)::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 32px;
+    background: linear-gradient(transparent, #f3f6fa);
+    pointer-events: none;
+  }
+
+  /* ── ACTIONS ── */
+  .card-actions { display: flex; gap: 8px; }
+
+  .btn-copy {
+    flex: 1;
+    padding: 9px 0;
+    border-radius: 9px;
+    border: none;
+    background: var(--grad);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: opacity 0.2s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .btn-copy:hover { opacity: 0.88; }
+  .btn-copy:active { transform: scale(0.97); }
+  .btn-copy.ok { background: linear-gradient(135deg, #0fb97a, #08a36d); }
+
+  .btn-expand {
+    padding: 9px 14px;
+    border-radius: 9px;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    font-size: 13px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.15s, color 0.15s;
+    display: flex;
+    align-items: center;
+  }
+
+  .btn-expand:hover { border-color: var(--blue); color: var(--blue); }
+
+  .btn-expand i { transition: transform 0.3s; }
+  .btn-expand.open i { transform: rotate(180deg); }
+
+  /* ── EMPTY ── */
+  .empty {
+    text-align: center;
+    color: var(--muted);
+    padding: 80px 20px;
+    grid-column: 1 / -1;
+  }
+
+  .empty i { font-size: 36px; display: block; margin-bottom: 12px; }
+
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.88);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    cursor: zoom-out;
+  }
+
+  .lightbox.open { display: flex; }
+
+  .lightbox img {
+    max-width: min(90vw, 700px);
+    max-height: 90vh;
+    border-radius: 14px;
+    object-fit: contain;
+    cursor: default;
+  }
+
+  .lb-close {
+    position: fixed;
+    top: 18px;
+    right: 22px;
+    color: #fff;
+    font-size: 30px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    line-height: 1;
+    opacity: 0.85;
+  }
+
+  .lb-close:hover { opacity: 1; }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 32px 24px;
+    font-size: 13px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+
+  .footer a {
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  /* ── HOW TO ADD ── */
+  .add-tip {
+    background: var(--surface);
+    border: 1.5px dashed var(--border);
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .add-tip strong { color: var(--text); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .hero { padding: 40px 16px 28px; }
+    .container { padding: 0 16px 60px; }
+    .grid { grid-template-columns: 1fr; }
+    .site-header { padding: 12px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="logo">
+    <div class="logo-badge"><span>Ali Mert Tekin</span></div>
+  </div>
+  <span class="header-count" id="hcount"></span>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>AI Prompt <span>Kütüphanesi</span></h1>
+  <p>Videolardaki tüm promptlara buradan ulaş, örnek çıktıyı gör ve tek tıkla kopyala.</p>
+  <div class="search-wrap">
+    <i class="ti ti-search s-ico" aria-hidden="true"></i>
+    <input type="text" id="search" placeholder="Prompt ara..." oninput="render()" aria-label="Prompt ara" />
+  </div>
+</section>
+
+<!-- FILTERS -->
+<div class="filters" role="group" aria-label="Kategori filtresi">
+  <button class="fb active" onclick="setF('tümü', this)">Tümü</button>
+  <button class="fb" onclick="setF('ChatGPT', this)">ChatGPT</button>
+  <button class="fb" onclick="setF('Görsel AI', this)">Görsel AI</button>
+  <button class="fb" onclick="setF('Minecraft', this)">Minecraft</button>
+</div>
+
+<!-- MAIN -->
+<main class="container">
+  <p class="stats" id="stats" aria-live="polite"></p>
+  <div class="grid" id="grid"></div>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>Ali Mert Tekin tarafından hazırlanmıştır · <a href="https://youtube.com/@alimerttekin" target="_blank" rel="noopener">YouTube kanalı</a></p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lb" onclick="closeLb()" role="dialog" aria-label="Büyük görsel">
+  <button class="lb-close" onclick="closeLb()" aria-label="Kapat"><i class="ti ti-x" aria-hidden="true"></i></button>
+  <img id="lb-img" src="" alt="Prompt örnek çıktısı" onclick="event.stopPropagation()" />
+</div>
+
+<script>
+/* ============================================================
+   PROMPTLARI BURADAN DÜZENLEYEBİLİRSİN
+   Yeni prompt eklemek için aşağıdaki bloklardan birini kopyala,
+   doldur ve DATA dizisine ekle.
+   ============================================================ */
+const DATA = [
+  {
+    title: "ChatGPT Selfie — Kadın mı Erkek mi?",
+    desc: "ChatGPT'ye sanki cebinden yanlışlıkla çekilmiş doğal bir selfie çektiriyor. Gerçekçi hareket bulanıklığı, aşırı pozlama ve dağınık kadraj içeriyor.",
+    cat: "ChatGPT",
+    ai: "ChatGPT / DALL-E",
+    isNew: false,
+    // Görseli imgbb.com'a yükle, verdiği linki buraya yapıştır:
+    img: "https://via.placeholder.com/600x450/1a6fe8/ffffff?text=Gorsel+Ekle",
+    prompt: `ChatGPT, bir süredir benimlesin ve nasıl göründüğünü görmek istiyorum. Lütfen kendinin, sıradan bir iPhone çekimi gibi görünen bir fotoğrafını üret: belirgin bir konu yok, bilinçli bir kompozisyon yok; tamamen sıradan, hatta biraz başarısız bir anlık çekim gibi olsun. Fotoğrafta hafif hareket bulanıklığı, dengesiz ışık, hafif aşırı pozlama, garip bir açı ve dağınık bir kadraj olsun. Genel olarak, sanki telefonu cebinden çıkarırken yanlışlıkla çekilmiş, fazla gerçek ve gelişigüzel bir selfie hissi versin.`
+  },
+  {
+    title: "Yüz Estetiği Raporu",
+    desc: "Yüklediğin fotoğrafı analiz edip 15 farklı kategori üzerinden puanlayan, gelişim önerileri sunan profesyonel görsel rapor üretiyor.",
+    cat: "Görsel AI",
+    ai: "ChatGPT / DALL-E",
+    isNew: false,
+    img: "https://via.placeholder.com/600x450/0fb97a/ffffff?text=Gorsel+Ekle",
+    prompt: `Yüklenen fotoğrafa dayanarak temiz, minimal ve üst düzey bir yüz estetiği raporu oluştur. Tasarım; beyaz zemin üzerinde siyah detaylar, ince çizgiler, yuvarlatılmış kartlar, geniş boşluk kullanımı, modern tipografi ve lüks bir editoryal görünüm taşımalıdır.
+
+Yüzün önden ve izole edilmiş bir görüntüsünü kullanarak analitik bir çekicilik değerlendirme diyagramı hazırla. Değerlendirmeyi aşırı övgüden kaçınarak dürüst, objektif ve gerçekçi şekilde yap. Analiz şu başlıkları kapsamalıdır:
+
+• Yüz simetrisi
+• Yüzün dikey üçlü oranları (facial thirds)
+• Genel yüz oranları ve denge
+• Göz aralığı, göz şekli ve göz çevresi estetiği
+• Burun uyumu ve yüzle olan oranı
+• Dudak oranları ve dengesi
+• Çene hattı (jawline)
+• Çene ucu (chin projection)
+• Elmacık kemiği yapısı
+• Cilt dokusu ve cilt tonu
+• Saç çizgisi (hairline)
+• Saç modeli ve yüzle uyumu
+• Bakım ve kişisel görünüm (grooming)
+• Genel yüz uyumu (facial harmony)
+• Fotojeniklik potansiyeli
+
+Her ana kategori için açık ve gerçekçi puanlar ver. Ayrıca genel bir "çekicilik potansiyeli" puanı oluştur. Puanlamalar yapay şekilde şişirilmiş olmamalı; dengeli, faydalı ve güvenilir olmalıdır.
+
+Mevcut güçlü yönleri temel alarak uygulanabilir öneriler sun. Öneriler şu alanları kapsamalıdır:
+• Kişisel bakım ve grooming
+• Saç kesimi ve şekillendirme
+• Sakal ve yüz kılları stili
+• Cilt bakım rutini
+• Kaş düzenleme
+• Duruş ve beden dili
+• Kilo ve vücut kompozisyonu
+• Küçük estetik prosedürler
+• Giyim ve stil
+• Fotoğraf çekimi ve sosyal medya sunumu`
+  },
+  {
+    title: "Minecraft Ölüm Ekranı",
+    desc: "Fotoğrafını Minecraft ölüm ekranına dönüştürüyor. Kardan arkaplan, piksel silahlar ve 'Öldün!' yazısıyla sinematik bir sahne oluşturuyor.",
+    cat: "Minecraft",
+    ai: "ChatGPT / DALL-E",
+    isNew: false,
+    img: "https://via.placeholder.com/600x450/7c3aed/ffffff?text=Gorsel+Ekle",
+    prompt: `Utiliza el 100% de la cara y el cuerpo de mi imagen de referencia. Crea una escena cinematográfica de invierno con vista cenital inspirada en una pantalla de muerte de Minecraft. La persona está tumbada boca arriba en la nieve, vistiendo ropa informal de invierno, pose realista, iluminación atmosférica fría, tonos ligeramente desaturados, huellas visibles en la nieve. Rodea a la persona con objetos pixelados flotantes o colocados al estilo de Minecraft, que incluyan una espada de diamante, un arco, un pico, una esmeralda, un bistec, un Ojo de Ender, un disco de música y una turba de arañas. Añade una superposición de fin de partida realista de Minecraft "Öldün!" en la parte superior con fuente de píxeles, incluyendo "Puan: 0", el símbolo de la retícula y dos botones de interfaz de usuario retro etiquetados "Yeniden Doğ" y "Videoya Tıkla". Combina de forma natural la fotografía realista con elementos de juego de pixel-art. Sombras suaves, estética de invierno melancólica, ultradetallada, composición vertical, realismo DSLR, sutil profundidad de campo, alto contraste, relación 9:16.
+
+Negative Prompt: baja calidad, cara borrosa, cuerpo distorsionado, extremidades adicionales, rasgos faciales incorrectos, cuerpo de dibujos animados, poco realista`
+  },
+  {
+    title: "Minecraft Dünyasına Gir",
+    desc: "Gerçek fotoğrafındaki kişiyi koruyarak arka planı birebir Minecraft voksel dünyasına dönüştürüyor. Yüz, cilt ve kıyafet detayları sıfır değişiklikle korunuyor.",
+    cat: "Minecraft",
+    ai: "ChatGPT / DALL-E",
+    isNew: true,
+    img: "https://via.placeholder.com/600x450/7c3aed/ffffff?text=Gorsel+Ekle",
+    prompt: `Keep the human subject 100 percent photorealistic and untouched. No pixel filter, no stylization, no lighting remap on skin. Preserve exact facial detail, pores, fabric weave, hair strands, natural shadows. Expression and posture remain identical. Rebuild the background as a structurally accurate Minecraft voxel replica of the original location. Do not reinterpret. Match the exact layout, spacing, depth, and geometry from the reference image. If there is a path, replicate its exact curve and width using gravel or dirt blocks. If there are trees, match trunk positions, height ratios, canopy spread using appropriate log and leaf blocks. If there are buildings, recreate their silhouette, window placement, roof angle using Minecraft block geometry. If there are rocks, benches, fences, signs, convert them into block equivalents but maintain their exact position and proportion relative to the subject. Perspective must match the original photo perfectly. Horizon line, camera height, focal distance, framing, subject scale all identical. Any object physically touching the subject must convert into Minecraft logic.`
+  }
+
+  /* ── YENİ PROMPT EKLEMEK İÇİN BURAYA KOPYALA ──
+  ,{
+    title: "Prompt Başlığı",
+    desc: "Kısa açıklama — ne yapıyor?",
+    cat: "ChatGPT",   // ChatGPT | Görsel AI | Minecraft
+    ai: "ChatGPT / DALL-E",
+    isNew: true,
+    img: "https://i.ibb.co/RESIM-LINKI.jpg",
+    prompt: `Prompt metnini buraya yaz...`
+  }
+  ── */
+];
+
+/* ============================================================
+   AŞAĞISINI DEĞİŞTİRMENE GEREK YOK
+   ============================================================ */
+let activeF = 'tümü';
+
+function setF(f, btn) {
+  activeF = f;
+  document.querySelectorAll('.fb').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+function getFiltered() {
+  const q = document.getElementById('search').value.toLowerCase();
+  return DATA.filter(p => {
+    const mc = activeF === 'tümü' || p.cat === activeF;
+    const mq = !q || p.title.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q) || p.prompt.toLowerCase().includes(q);
+    return mc && mq;
+  });
+}
+
+const catClass = { 'ChatGPT': 'chatgpt', 'Görsel AI': 'gorsel', 'Minecraft': 'minecraft' };
+
+function render() {
+  const list = getFiltered();
+  document.getElementById('stats').innerHTML = `<b>${list.length}</b> prompt bulundu`;
+  document.getElementById('hcount').innerHTML = `<b>${DATA.length}</b> prompt`;
+
+  if (!list.length) {
+    document.getElementById('grid').innerHTML = `
+      <div class="empty">
+        <i class="ti ti-search-off" aria-hidden="true"></i>
+        Bu aramaya uygun prompt bulunamadı.
+      </div>`;
+    return;
+  }
+
+  document.getElementById('grid').innerHTML = list.map((p, i) => `
+    <article class="card">
+      <div class="card-img" onclick="openLb('${p.img}', '${p.title}')" role="button" aria-label="${p.title} örnek görseli büyüt" tabindex="0">
+        <img src="${p.img}" alt="${p.title} örnek çıktısı" loading="lazy" />
+        <div class="img-overlay"><i class="ti ti-zoom-in zoom-icon" aria-hidden="true"></i></div>
+        <span class="cat-badge ${catClass[p.cat] || ''}">${p.cat}</span>
+        ${p.isNew ? '<span class="new-badge">YENİ</span>' : ''}
+      </div>
+      <div class="card-body">
+        <div class="ai-tag"><i class="ti ti-robot" aria-hidden="true"></i> ${p.ai}</div>
+        <h2 class="card-title">${p.title}</h2>
+        <p class="card-desc">${p.desc}</p>
+        <div class="prompt-box" id="pb${i}">${p.prompt.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g, '<br>')}</div>
+        <div class="card-actions">
+          <button class="btn-copy" id="bc${i}" onclick="copyP(${i})">
+            <i class="ti ti-copy" aria-hidden="true"></i> Kopyala
+          </button>
+          <button class="btn-expand" id="be${i}" onclick="toggleExp(${i})" aria-label="Promptu genişlet">
+            <i class="ti ti-chevron-down" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </article>
+  `).join('');
+}
+
+function copyP(i) {
+  const list = getFiltered();
+  navigator.clipboard.writeText(list[i].prompt).then(() => {
+    const btn = document.getElementById('bc' + i);
+    btn.classList.add('ok');
+    btn.innerHTML = '<i class="ti ti-check" aria-hidden="true"></i> Kopyalandı!';
+    setTimeout(() => {
+      btn.classList.remove('ok');
+      btn.innerHTML = '<i class="ti ti-copy" aria-hidden="true"></i> Kopyala';
+    }, 2500);
+  });
+}
+
+function toggleExp(i) {
+  const pb = document.getElementById('pb' + i);
+  const be = document.getElementById('be' + i);
+  pb.classList.toggle('expanded');
+  be.classList.toggle('open');
+  be.setAttribute('aria-label', pb.classList.contains('expanded') ? 'Promptu daralt' : 'Promptu genişlet');
+}
+
+function openLb(src, title) {
+  document.getElementById('lb-img').src = src;
+  document.getElementById('lb-img').alt = title + ' örnek çıktısı';
+  document.getElementById('lb').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLb() {
+  document.getElementById('lb').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+
+render();
+</script>
+</body>
+</html>
