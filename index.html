@@ -12,9 +12,9 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --blue: #ef4444;
-    --green: #f97316;
-    --grad: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+    --blue: #1a6fe8;
+    --green: #0fb97a;
+    --grad: linear-gradient(135deg, #1a6fe8 0%, #0fb97a 100%);
     --bg: #f7f9fc;
     --surface: #ffffff;
     --text: #111827;
@@ -439,6 +439,55 @@
     text-decoration: none;
   }
 
+  /* ── SOCIAL ── */
+  .social-section {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 40px 24px;
+    text-align: center;
+  }
+
+  .social-section h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .social-section p {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+
+  .social-links {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .social-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 12px 22px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    transition: transform 0.15s, opacity 0.15s;
+  }
+
+  .social-btn:hover { transform: translateY(-2px); opacity: 0.9; }
+  .social-btn:active { transform: scale(0.97); }
+  .social-btn.youtube { background: #ff0000; color: #fff; }
+  .social-btn.tiktok { background: #000; color: #fff; }
+  .social-btn.instagram { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; }
+  .social-btn i { font-size: 20px; }
+
   /* ── HOW TO ADD ── */
   .add-tip {
     background: var(--surface);
@@ -496,9 +545,26 @@
   <div class="grid" id="grid"></div>
 </main>
 
+<!-- SOCIAL -->
+<section class="social-section">
+  <h2>Beni Takip Et</h2>
+  <p>Yeni promptlar ve AI içerikleri için sosyal medyada takip et!</p>
+  <div class="social-links">
+    <a class="social-btn youtube" href="https://www.youtube.com/@AliMertTekin/videos" target="_blank" rel="noopener" aria-label="YouTube kanalı">
+      <i class="ti ti-brand-youtube" aria-hidden="true"></i> YouTube
+    </a>
+    <a class="social-btn tiktok" href="https://www.tiktok.com/@alimerttekinn" target="_blank" rel="noopener" aria-label="TikTok hesabı">
+      <i class="ti ti-brand-tiktok" aria-hidden="true"></i> TikTok
+    </a>
+    <a class="social-btn instagram" href="https://www.instagram.com/alimerttekin0/" target="_blank" rel="noopener" aria-label="Instagram hesabı">
+      <i class="ti ti-brand-instagram" aria-hidden="true"></i> Instagram
+    </a>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer class="footer">
-  <p>Ali Mert Tekin tarafından hazırlanmıştır · <a href="https://youtube.com/@alimerttekin" target="_blank" rel="noopener">YouTube kanalı</a></p>
+  <p>Ali Mert Tekin tarafından hazırlanmıştır</p>
 </footer>
 
 <!-- LIGHTBOX -->
