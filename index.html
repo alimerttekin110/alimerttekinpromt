@@ -12,9 +12,9 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
---blue: #ef4444;
---green: #f97316;
---grad: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+    --blue: #ef4444;
+    --green: #f97316;
+    --grad: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
     --bg: #f7f9fc;
     --surface: #ffffff;
     --text: #111827;
@@ -255,6 +255,8 @@
   .cat-badge.chatgpt { color: #0a9e67; }
   .cat-badge.gorsel  { color: #1a6fe8; }
   .cat-badge.minecraft { color: #7c3aed; }
+  .cat-badge.aksiyon { color: #dc2626; }
+  .cat-badge.aksiyon { color: #dc2626; }
 
   .new-badge {
     position: absolute;
@@ -537,6 +539,8 @@
   <button class="fb" onclick="setF('ChatGPT', this)">ChatGPT</button>
   <button class="fb" onclick="setF('Görsel AI', this)">Görsel AI</button>
   <button class="fb" onclick="setF('Minecraft', this)">Minecraft</button>
+  <button class="fb" onclick="setF('Aksiyon', this)">Aksiyon</button>
+  <button class="fb" onclick="setF('Aksiyon', this)">Aksiyon</button>
 </div>
 
 <!-- MAIN -->
@@ -647,9 +651,18 @@ Negative Prompt: baja calidad, cara borrosa, cuerpo distorsionado, extremidades 
     desc: "Gerçek fotoğrafındaki kişiyi koruyarak arka planı birebir Minecraft voksel dünyasına dönüştürüyor. Yüz, cilt ve kıyafet detayları sıfır değişiklikle korunuyor.",
     cat: "Minecraft",
     ai: "ChatGPT / DALL-E",
-    isNew: true,
+    isNew: false,
     img: "https://i.ibb.co/Fbd0PJxc/Whats-App-mage-2026-06-s14-at-20-45-15.jpg",
     prompt: `Keep the human subject 100 percent photorealistic and untouched. No pixel filter, no stylization, no lighting remap on skin. Preserve exact facial detail, pores, fabric weave, hair strands, natural shadows. Expression and posture remain identical. Rebuild the background as a structurally accurate Minecraft voxel replica of the original location. Do not reinterpret. Match the exact layout, spacing, depth, and geometry from the reference image. If there is a path, replicate its exact curve and width using gravel or dirt blocks. If there are trees, match trunk positions, height ratios, canopy spread using appropriate log and leaf blocks. If there are buildings, recreate their silhouette, window placement, roof angle using Minecraft block geometry. If there are rocks, benches, fences, signs, convert them into block equivalents but maintain their exact position and proportion relative to the subject. Perspective must match the original photo perfectly. Horizon line, camera height, focal distance, framing, subject scale all identical. Any object physically touching the subject must convert into Minecraft logic.`
+  },
+  {
+    title: "Sakin İş Adamı — Çöl Krizi",
+    desc: "Çölün ortasında sakince gazete okuyan bir iş adamı ile arkasında alev alev yanan klasik bir arabanın dramatik kontrastını üretiyor. Sinematik, lüks kriz estetiği.",
+    cat: "Aksiyon",
+    ai: "ChatGPT / DALL-E",
+    isNew: true,
+    img: "https://i.ibb.co/Mjf5wXH/BAD2-AE2-C-6-EC2-48-CD-BAE4-052517719663.png",
+    prompt: `A calm businessman in a perfectly tailored black suit and tie, wearing dark sunglasses, sitting on a simple red folding chair in the middle of a barren desert, casually reading a newspaper while a vintage 1960s American convertible behind him is completely engulfed in massive flames and thick black smoke, graffiti-covered car, cinematic contrast between calm and chaos, luxury crisis aesthetic, dramatic fireball, photorealistic, ultra detailed, shallow depth of field, golden hour lighting, muted colors, editorial fashion photography, centered composition, 85mm lens, high dynamic range, masterpiece, award-winning photography, realistic textures, desert landscape, smoke volumetrics, movie still`
   }
 
   /* ── YENİ PROMPT EKLEMEK İÇİN BURAYA KOPYALA ──
@@ -686,7 +699,7 @@ function getFiltered() {
   });
 }
 
-const catClass = { 'ChatGPT': 'chatgpt', 'Görsel AI': 'gorsel', 'Minecraft': 'minecraft' };
+const catClass = { 'ChatGPT': 'chatgpt', 'Görsel AI': 'gorsel', 'Minecraft': 'minecraft', 'Aksiyon': 'aksiyon' };
 
 function render() {
   const list = getFiltered();
