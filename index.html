@@ -6,28 +6,73 @@
 <title>Ali Mert Tekin — Prompt Kütüphanesi</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  /* ══════════════════════════════════════════
+     DARK MODE (Matrix) — default
+     ══════════════════════════════════════════ */
   :root {
-    --blue: #ef4444;
-    --green: #f97316;
-    --grad: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
-    --bg: #f7f9fc;
+    --neon: #00ff66;
+    --neon-dim: #00b34a;
+    --neon-glow: rgba(0, 255, 102, 0.35);
+    --grad: linear-gradient(135deg, #00ff66 0%, #00b8ff 100%);
+    --bg: #050807;
+    --surface: #0a100c;
+    --surface2: #0d1510;
+    --text: #d7ffe4;
+    --muted: #5f9d78;
+    --border: #14261a;
+    --scanline: rgba(0,255,102,0.03);
+  }
+
+  /* ══════════════════════════════════════════
+     LIGHT MODE
+     ══════════════════════════════════════════ */
+  html.light {
+    --neon: #059669;
+    --neon-dim: #047857;
+    --neon-glow: rgba(5, 150, 105, 0.18);
+    --grad: linear-gradient(135deg, #059669 0%, #0284c7 100%);
+    --bg: #f4faf6;
     --surface: #ffffff;
-    --text: #111827;
-    --muted: #6b7280;
-    --border: #e5e7eb;
+    --surface2: #eef7f1;
+    --text: #0f2418;
+    --muted: #5b7568;
+    --border: #d6e8dc;
+    --scanline: rgba(5,150,105,0.02);
   }
 
   body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'JetBrains Mono', monospace;
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
+    transition: background 0.3s, color 0.3s;
+    position: relative;
+    overflow-x: hidden;
   }
+
+  /* subtle matrix scanline texture over everything */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      0deg,
+      var(--scanline) 0px,
+      var(--scanline) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    z-index: 1;
+    opacity: 0.6;
+  }
+
+  ::selection { background: var(--neon); color: #000; }
 
   /* ── HEADER ── */
   .site-header {
@@ -40,45 +85,103 @@
     position: sticky;
     top: 0;
     z-index: 100;
-  }
-
-  .logo {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
+    transition: background 0.3s, border-color 0.3s;
   }
 
   .logo-badge {
-    background: var(--grad);
-    border-radius: 8px;
+    background: transparent;
+    border: 1.5px solid var(--neon);
+    border-radius: 6px;
     padding: 6px 14px;
+    box-shadow: 0 0 12px var(--neon-glow);
   }
 
   .logo-badge span {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'JetBrains Mono', monospace;
     font-weight: 700;
     font-size: 13px;
-    color: #fff;
-    letter-spacing: 0.02em;
+    color: var(--neon);
+    letter-spacing: 0.03em;
     white-space: nowrap;
   }
 
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
   .header-count {
-    font-size: 13px;
+    font-size: 12px;
     color: var(--muted);
   }
 
-  .header-count b { color: var(--blue); }
+  .header-count b { color: var(--neon); }
+
+  /* ── THEME TOGGLE ── */
+  .theme-toggle {
+    width: 42px;
+    height: 24px;
+    border-radius: 20px;
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    position: relative;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    flex-shrink: 0;
+  }
+
+  .theme-toggle:hover { border-color: var(--neon); }
+
+  .toggle-knob {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    background: var(--neon);
+    box-shadow: 0 0 8px var(--neon-glow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #000;
+    transition: transform 0.25s ease;
+  }
+
+  html.light .toggle-knob { transform: translateX(18px); }
 
   /* ── HERO ── */
   .hero {
     text-align: center;
     padding: 56px 24px 40px;
+    position: relative;
+    z-index: 2;
   }
+
+  .hero .prompt-line {
+    font-size: 12px;
+    color: var(--neon-dim);
+    margin-bottom: 14px;
+    letter-spacing: 0.05em;
+  }
+
+  .hero .prompt-line::before { content: '> '; color: var(--neon); }
+
+  .cursor-blink {
+    display: inline-block;
+    width: 8px;
+    background: var(--neon);
+    animation: blink 1s step-end infinite;
+    margin-left: 2px;
+  }
+
+  @keyframes blink { 50% { opacity: 0; } }
 
   .hero h1 {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(26px, 5vw, 40px);
+    font-size: clamp(26px, 5vw, 42px);
     font-weight: 700;
     color: var(--text);
     margin-bottom: 12px;
@@ -86,14 +189,12 @@
   }
 
   .hero h1 span {
-    background: var(--grad);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--neon);
+    text-shadow: 0 0 18px var(--neon-glow);
   }
 
   .hero p {
-    font-size: 15px;
+    font-size: 14px;
     color: var(--muted);
     max-width: 480px;
     margin: 0 auto 28px;
@@ -111,18 +212,20 @@
     width: 100%;
     padding: 12px 16px 12px 44px;
     border: 1.5px solid var(--border);
-    border-radius: 12px;
-    font-size: 15px;
+    border-radius: 8px;
+    font-size: 14px;
     background: var(--surface);
     color: var(--text);
     outline: none;
     transition: border-color 0.2s, box-shadow 0.2s;
-    font-family: 'Inter', sans-serif;
+    font-family: 'JetBrains Mono', monospace;
   }
 
+  .search-wrap input::placeholder { color: var(--muted); }
+
   .search-wrap input:focus {
-    border-color: var(--blue);
-    box-shadow: 0 0 0 3px rgba(26,111,232,0.1);
+    border-color: var(--neon);
+    box-shadow: 0 0 0 3px var(--neon-glow);
   }
 
   .search-wrap .s-ico {
@@ -142,24 +245,26 @@
     flex-wrap: wrap;
     justify-content: center;
     padding: 0 24px 24px;
+    position: relative;
+    z-index: 2;
   }
 
   .fb {
     padding: 6px 16px;
-    border-radius: 20px;
+    border-radius: 6px;
     border: 1.5px solid var(--border);
     background: var(--surface);
-    font-size: 13px;
+    font-size: 12px;
     color: var(--muted);
     cursor: pointer;
     transition: all 0.15s;
-    font-family: 'Inter', sans-serif;
+    font-family: 'JetBrains Mono', monospace;
   }
 
   .fb.active, .fb:hover {
-    background: var(--grad);
-    color: #fff;
-    border-color: transparent;
+    border-color: var(--neon);
+    color: var(--neon);
+    box-shadow: 0 0 10px var(--neon-glow);
   }
 
   /* ── GRID ── */
@@ -167,16 +272,18 @@
     max-width: 1060px;
     margin: 0 auto;
     padding: 0 24px 80px;
+    position: relative;
+    z-index: 2;
   }
 
   .stats {
     text-align: center;
-    font-size: 13px;
+    font-size: 12px;
     color: var(--muted);
     margin-bottom: 20px;
   }
 
-  .stats b { color: var(--blue); }
+  .stats b { color: var(--neon); }
 
   .grid {
     display: grid;
@@ -188,15 +295,16 @@
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 16px;
+    border-radius: 10px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: box-shadow 0.2s, transform 0.15s;
+    transition: box-shadow 0.2s, transform 0.15s, border-color 0.2s;
   }
 
   .card:hover {
-    box-shadow: 0 8px 32px rgba(26,111,232,0.12);
+    border-color: var(--neon-dim);
+    box-shadow: 0 0 24px var(--neon-glow);
     transform: translateY(-3px);
   }
 
@@ -206,18 +314,19 @@
     aspect-ratio: 4/3;
     overflow: hidden;
     cursor: zoom-in;
-    background: #f3f4f6;
+    background: var(--surface2);
   }
 
   .card-img img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.35s;
+    transition: transform 0.35s, filter 0.3s;
     display: block;
+    filter: saturate(0.9);
   }
 
-  .card:hover .card-img img { transform: scale(1.05); }
+  .card:hover .card-img img { transform: scale(1.05); filter: saturate(1.1); }
 
   .img-overlay {
     position: absolute;
@@ -229,13 +338,14 @@
     justify-content: center;
   }
 
-  .card:hover .img-overlay { background: rgba(0,0,0,0.2); }
+  .card:hover .img-overlay { background: rgba(0,20,10,0.35); }
 
   .zoom-icon {
-    color: #fff;
+    color: var(--neon);
     font-size: 28px;
     opacity: 0;
     transition: opacity 0.2s;
+    text-shadow: 0 0 10px var(--neon-glow);
   }
 
   .card:hover .zoom-icon { opacity: 1; }
@@ -244,31 +354,28 @@
     position: absolute;
     top: 10px;
     right: 10px;
-    font-size: 11px;
-    font-weight: 600;
+    font-size: 10px;
+    font-weight: 700;
     padding: 3px 10px;
-    border-radius: 20px;
-    background: rgba(255,255,255,0.93);
-    backdrop-filter: blur(6px);
+    border-radius: 5px;
+    background: var(--bg);
+    border: 1px solid var(--neon-dim);
+    color: var(--neon);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
   }
-
-  .cat-badge.chatgpt { color: #0a9e67; }
-  .cat-badge.gorsel  { color: #1a6fe8; }
-  .cat-badge.minecraft { color: #7c3aed; }
-  .cat-badge.aksiyon { color: #dc2626; }
-  .cat-badge.aksiyon { color: #dc2626; }
 
   .new-badge {
     position: absolute;
     top: 10px;
     left: 10px;
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 700;
     padding: 3px 9px;
-    border-radius: 20px;
-    background: var(--grad);
-    color: #fff;
-    letter-spacing: 0.04em;
+    border-radius: 5px;
+    background: var(--neon);
+    color: #000;
+    letter-spacing: 0.05em;
   }
 
   .card-body {
@@ -282,7 +389,7 @@
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    font-size: 11px;
+    font-size: 10.5px;
     color: var(--muted);
     margin-bottom: 8px;
   }
@@ -290,13 +397,13 @@
   .card-title {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 15px;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--text);
     margin-bottom: 7px;
   }
 
   .card-desc {
-    font-size: 13px;
+    font-size: 12.5px;
     color: var(--muted);
     line-height: 1.65;
     margin-bottom: 14px;
@@ -305,14 +412,15 @@
 
   /* ── PROMPT BOX ── */
   .prompt-box {
-    background: #f3f6fa;
-    border-left: 3px solid var(--blue);
-    border-radius: 0 8px 8px 0;
+    background: var(--surface2);
+    border-left: 2px solid var(--neon);
+    border-radius: 0 6px 6px 0;
     padding: 11px 13px;
-    font-size: 12px;
-    color: #334155;
+    font-size: 11.5px;
+    color: var(--text);
+    opacity: 0.85;
     line-height: 1.75;
-    font-family: 'Courier New', monospace;
+    font-family: 'JetBrains Mono', monospace;
     margin-bottom: 13px;
     max-height: 96px;
     overflow: hidden;
@@ -327,7 +435,7 @@
     position: absolute;
     bottom: 0; left: 0; right: 0;
     height: 32px;
-    background: linear-gradient(transparent, #f3f6fa);
+    background: linear-gradient(transparent, var(--surface2));
     pointer-events: none;
   }
 
@@ -337,41 +445,40 @@
   .btn-copy {
     flex: 1;
     padding: 9px 0;
-    border-radius: 9px;
-    border: none;
-    background: var(--grad);
-    color: #fff;
-    font-size: 13px;
-    font-weight: 500;
+    border-radius: 6px;
+    border: 1.5px solid var(--neon);
+    background: transparent;
+    color: var(--neon);
+    font-size: 12px;
+    font-weight: 600;
     cursor: pointer;
-    font-family: 'Inter', sans-serif;
-    transition: opacity 0.2s, transform 0.1s;
+    font-family: 'JetBrains Mono', monospace;
+    transition: background 0.2s, color 0.2s, transform 0.1s;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
   }
 
-  .btn-copy:hover { opacity: 0.88; }
+  .btn-copy:hover { background: var(--neon); color: #000; }
   .btn-copy:active { transform: scale(0.97); }
-  .btn-copy.ok { background: linear-gradient(135deg, #0fb97a, #08a36d); }
+  .btn-copy.ok { background: var(--neon); color: #000; }
 
   .btn-expand {
     padding: 9px 14px;
-    border-radius: 9px;
+    border-radius: 6px;
     border: 1.5px solid var(--border);
     background: transparent;
     color: var(--muted);
     font-size: 13px;
     cursor: pointer;
-    font-family: 'Inter', sans-serif;
+    font-family: 'JetBrains Mono', monospace;
     transition: border-color 0.15s, color 0.15s;
     display: flex;
     align-items: center;
   }
 
-  .btn-expand:hover { border-color: var(--blue); color: var(--blue); }
-
+  .btn-expand:hover { border-color: var(--neon); color: var(--neon); }
   .btn-expand i { transition: transform 0.3s; }
   .btn-expand.open i { transform: rotate(180deg); }
 
@@ -383,14 +490,14 @@
     grid-column: 1 / -1;
   }
 
-  .empty i { font-size: 36px; display: block; margin-bottom: 12px; }
+  .empty i { font-size: 36px; display: block; margin-bottom: 12px; color: var(--neon-dim); }
 
   /* ── LIGHTBOX ── */
   .lightbox {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.88);
+    background: rgba(0,0,0,0.9);
     z-index: 9999;
     align-items: center;
     justify-content: center;
@@ -403,16 +510,17 @@
   .lightbox img {
     max-width: min(90vw, 700px);
     max-height: 90vh;
-    border-radius: 14px;
+    border-radius: 10px;
     object-fit: contain;
     cursor: default;
+    box-shadow: 0 0 40px var(--neon-glow);
   }
 
   .lb-close {
     position: fixed;
     top: 18px;
     right: 22px;
-    color: #fff;
+    color: var(--neon);
     font-size: 30px;
     cursor: pointer;
     background: none;
@@ -423,30 +531,14 @@
 
   .lb-close:hover { opacity: 1; }
 
-  /* ── FOOTER ── */
-  .footer {
-    text-align: center;
-    padding: 32px 24px;
-    font-size: 13px;
-    color: var(--muted);
-    border-top: 1px solid var(--border);
-  }
-
-  .footer a {
-    background: var(--grad);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-weight: 500;
-    text-decoration: none;
-  }
-
   /* ── SOCIAL ── */
   .social-section {
     background: var(--surface);
     border-top: 1px solid var(--border);
     padding: 40px 24px;
     text-align: center;
+    position: relative;
+    z-index: 2;
   }
 
   .social-section h2 {
@@ -458,7 +550,7 @@
   }
 
   .social-section p {
-    font-size: 14px;
+    font-size: 13px;
     color: var(--muted);
     margin-bottom: 24px;
   }
@@ -475,34 +567,36 @@
     align-items: center;
     gap: 9px;
     padding: 12px 22px;
-    border-radius: 12px;
+    border-radius: 8px;
     text-decoration: none;
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    transition: transform 0.15s, opacity 0.15s;
-  }
-
-  .social-btn:hover { transform: translateY(-2px); opacity: 0.9; }
-  .social-btn:active { transform: scale(0.97); }
-  .social-btn.youtube { background: #ff0000; color: #fff; }
-  .social-btn.tiktok { background: #000; color: #fff; }
-  .social-btn.instagram { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; }
-  .social-btn i { font-size: 20px; }
-
-  /* ── HOW TO ADD ── */
-  .add-tip {
-    background: var(--surface);
-    border: 1.5px dashed var(--border);
-    border-radius: 14px;
-    padding: 20px 24px;
-    margin-bottom: 28px;
+    font-family: 'JetBrains Mono', monospace;
     font-size: 13px;
-    color: var(--muted);
-    line-height: 1.7;
+    font-weight: 600;
+    transition: transform 0.15s, box-shadow 0.2s;
+    border: 1.5px solid var(--border);
+    background: var(--surface2);
+    color: var(--text);
   }
 
-  .add-tip strong { color: var(--text); }
+  .social-btn:hover { transform: translateY(-2px); border-color: var(--neon); box-shadow: 0 0 14px var(--neon-glow); }
+  .social-btn:active { transform: scale(0.97); }
+  .social-btn i { font-size: 20px; }
+  .social-btn.youtube i { color: #ff0000; }
+  .social-btn.tiktok i { color: var(--text); }
+  .social-btn.instagram i { color: #e6683c; }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 28px 24px;
+    font-size: 12px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    position: relative;
+    z-index: 2;
+  }
+
+  .footer span { color: var(--neon); }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 600px) {
@@ -518,18 +612,24 @@
 <!-- HEADER -->
 <header class="site-header">
   <div class="logo">
-    <div class="logo-badge"><span>Ali Mert Tekin</span></div>
+    <div class="logo-badge"><span>ALİ MERT TEKİN</span></div>
   </div>
-  <span class="header-count" id="hcount"></span>
+  <div class="header-right">
+    <span class="header-count" id="hcount"></span>
+    <button class="theme-toggle" id="themeToggle" aria-label="Açık/koyu mod değiştir" title="Açık/koyu mod">
+      <span class="toggle-knob"><i class="ti ti-bolt" id="toggleIcon" aria-hidden="true"></i></span>
+    </button>
+  </div>
 </header>
 
 <!-- HERO -->
 <section class="hero">
+  <p class="prompt-line">system.init(prompt_library)<span class="cursor-blink"></span></p>
   <h1>AI Prompt <span>Kütüphanesi</span></h1>
   <p>Videolardaki tüm promptlara buradan ulaş, örnek çıktıyı gör ve tek tıkla kopyala.</p>
   <div class="search-wrap">
     <i class="ti ti-search s-ico" aria-hidden="true"></i>
-    <input type="text" id="search" placeholder="Prompt ara..." oninput="render()" aria-label="Prompt ara" />
+    <input type="text" id="search" placeholder="grep prompt..." oninput="render()" aria-label="Prompt ara" />
   </div>
 </section>
 
@@ -567,7 +667,7 @@
 
 <!-- FOOTER -->
 <footer class="footer">
-  <p>Ali Mert Tekin tarafından hazırlanmıştır</p>
+  <p>Ali Mert Tekin tarafından hazırlanmıştır <span>// end_of_file</span></p>
 </footer>
 
 <!-- LIGHTBOX -->
@@ -577,6 +677,33 @@
 </div>
 
 <script>
+/* ============================================================
+   TEMA (Açık / Koyu Mod)
+   ============================================================ */
+const themeToggle = document.getElementById('themeToggle');
+const toggleIcon = document.getElementById('toggleIcon');
+const htmlEl = document.documentElement;
+
+function applyTheme(mode) {
+  if (mode === 'light') {
+    htmlEl.classList.add('light');
+    toggleIcon.className = 'ti ti-sun';
+  } else {
+    htmlEl.classList.remove('light');
+    toggleIcon.className = 'ti ti-bolt';
+  }
+}
+
+const savedTheme = localStorage.getItem('theme') || 'dark';
+applyTheme(savedTheme);
+
+themeToggle.addEventListener('click', () => {
+  const isLight = htmlEl.classList.contains('light');
+  const next = isLight ? 'dark' : 'light';
+  applyTheme(next);
+  localStorage.setItem('theme', next);
+});
+
 /* ============================================================
    PROMPTLARI BURADAN DÜZENLEYEBİLİRSİN
    Yeni prompt eklemek için aşağıdaki bloklardan birini kopyala,
@@ -589,7 +716,6 @@ const DATA = [
     cat: "ChatGPT",
     ai: "ChatGPT / DALL-E",
     isNew: false,
-    // Görseli imgbb.com'a yükle, verdiği linki buraya yapıştır:
     img: "https://i.ibb.co/WWSbHMKX/Whats-App-mage-2026-06-14-at-20-45-15.jpg",
     prompt: `ChatGPT, bir süredir benimlesin ve nasıl göründüğünü görmek istiyorum. Lütfen kendinin, sıradan bir iPhone çekimi gibi görünen bir fotoğrafını üret: belirgin bir konu yok, bilinçli bir kompozisyon yok; tamamen sıradan, hatta biraz başarısız bir anlık çekim gibi olsun. Fotoğrafta hafif hareket bulanıklığı, dengesiz ışık, hafif aşırı pozlama, garip bir açı ve dağınık bir kadraj olsun. Genel olarak, sanki telefonu cebinden çıkarırken yanlışlıkla çekilmiş, fazla gerçek ve gelişigüzel bir selfie hissi versin.`
   },
@@ -659,12 +785,11 @@ Negative Prompt: baja calidad, cara borrosa, cuerpo distorsionado, extremidades 
     desc: "Çölün ortasında sakince gazete okuyan bir iş adamı ile arkasında alev alev yanan klasik bir arabanın dramatik kontrastını üretiyor. Sinematik, lüks kriz estetiği.",
     cat: "Aksiyon",
     ai: "ChatGPT / DALL-E",
-    isNew: true,
+    isNew: false,
     img: "https://i.ibb.co/Mjf5wXH/BAD2-AE2-C-6-EC2-48-CD-BAE4-052517719663.png",
     prompt: `A calm businessman in a perfectly tailored black suit and tie, wearing dark sunglasses, sitting on a simple red folding chair in the middle of a barren desert, casually reading a newspaper while a vintage 1960s American convertible behind him is completely engulfed in massive flames and thick black smoke, graffiti-covered car, cinematic contrast between calm and chaos, luxury crisis aesthetic, dramatic fireball, photorealistic, ultra detailed, shallow depth of field, golden hour lighting, muted colors, editorial fashion photography, centered composition, 85mm lens, high dynamic range, masterpiece, award-winning photography, realistic textures, desert landscape, smoke volumetrics, movie still`
-  }
-
-  ,{
+  },
+  {
     title: "Saç Modeli Analizi",
     desc: "Fotoğrafını analiz ederek yüz şekline en uygun saç modellerini yan yana karşılaştırmalı, minimal ve premium bir görsel rapor olarak sunuyor.",
     cat: "ChatGPT",
@@ -678,7 +803,7 @@ Negative Prompt: baja calidad, cara borrosa, cuerpo distorsionado, extremidades 
   ,{
     title: "Prompt Başlığı",
     desc: "Kısa açıklama — ne yapıyor?",
-    cat: "ChatGPT",   // ChatGPT | Görsel AI | Minecraft
+    cat: "ChatGPT",   // ChatGPT | Görsel AI | Minecraft | Aksiyon
     ai: "ChatGPT / DALL-E",
     isNew: true,
     img: "https://i.ibb.co/RESIM-LINKI.jpg",
@@ -729,7 +854,7 @@ function render() {
       <div class="card-img" onclick="openLb('${p.img}', '${p.title}')" role="button" aria-label="${p.title} örnek görseli büyüt" tabindex="0">
         <img src="${p.img}" alt="${p.title} örnek çıktısı" loading="lazy" />
         <div class="img-overlay"><i class="ti ti-zoom-in zoom-icon" aria-hidden="true"></i></div>
-        <span class="cat-badge ${catClass[p.cat] || ''}">${p.cat}</span>
+        <span class="cat-badge">${p.cat}</span>
         ${p.isNew ? '<span class="new-badge">YENİ</span>' : ''}
       </div>
       <div class="card-body">
