@@ -648,114 +648,6 @@
   .btn-expand i { transition: transform 0.3s; }
   .btn-expand.open i { transform: rotate(45deg); }
 
-  /* ── RATE & COMMENTS ── */
-  .rate-box {
-    margin-top: 16px;
-    padding-top: 14px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    gap: 9px;
-  }
-
-  .rate-row { display: flex; align-items: center; gap: 8px; }
-
-  .avg-stars { display: flex; gap: 2px; }
-  .avg-stars i { font-size: 14px; color: var(--border); }
-  .avg-stars i.filled { color: #F5B301; }
-
-  .avg-text { font-size: 11px; color: var(--muted); }
-
-  .star-input {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: flex-end;
-    gap: 3px;
-  }
-
-  .star-input button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 2px;
-    color: var(--border);
-    transition: color 0.15s;
-  }
-
-  .star-input button i { font-size: 17px; pointer-events: none; }
-
-  .star-input button:hover,
-  .star-input button:hover ~ button,
-  .star-input button.voted { color: #F5B301; }
-
-  .comments-toggle {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: none;
-    border: none;
-    color: var(--muted);
-    font-size: 12px;
-    font-family: 'Inter', sans-serif;
-    cursor: pointer;
-    padding: 0;
-    align-self: flex-start;
-  }
-
-  .comments-toggle:hover { color: var(--primary); }
-
-  .comments-panel { display: none; flex-direction: column; gap: 8px; }
-  .comments-panel.open { display: flex; }
-
-  .comments-list {
-    max-height: 130px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .comment-item {
-    background: var(--surface2);
-    border-radius: 8px;
-    padding: 8px 10px;
-    font-size: 11.5px;
-  }
-
-  .comment-item b { color: var(--text); font-weight: 600; }
-  .comment-item span { color: var(--muted); display: block; margin-top: 2px; line-height: 1.5; }
-
-  .comment-form { display: flex; flex-direction: column; gap: 6px; }
-
-  .comment-form input,
-  .comment-form textarea {
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    background: var(--surface2);
-    color: var(--text);
-    padding: 8px 10px;
-    font-size: 11.5px;
-    font-family: 'Inter', sans-serif;
-    outline: none;
-    resize: vertical;
-  }
-
-  .comment-form input:focus,
-  .comment-form textarea:focus { border-color: var(--primary); }
-
-  .comment-form button {
-    align-self: flex-end;
-    background: var(--grad);
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    padding: 7px 16px;
-    font-size: 11.5px;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: 'Inter', sans-serif;
-  }
-
   /* ── EMPTY ── */
   .empty {
     text-align: center;
@@ -1012,7 +904,6 @@ themeToggle.addEventListener('click', () => {
    ============================================================ */
 const DATA = [
   {
-    id: "sac-modeli-analizi",
     title: "Saç Modeli Analizi",
     desc: "Fotoğrafını analiz ederek yüz şekline en uygun saç modellerini yan yana karşılaştırmalı, minimal ve premium bir görsel rapor olarak sunuyor.",
     cat: "ChatGPT",
@@ -1022,7 +913,6 @@ const DATA = [
     prompt: `Bu portreyi kullanarak temiz, modern bir saç modeli analiz görseli oluştur. Kişiye en çok hangi saç modellerinin yakıştığını vurgulamak için yan yana saç modeli karşılaştırmaları göster. Görsel odaklı olsun; yalnızca kısa etiketler kullan, paragraf kullanma. Minimal, premium bir stil kullan: nötr arka plan.`
   },
   {
-    id: "chatgpt-selfie-kadin-erkek",
     title: "ChatGPT Selfie — Kadın mı Erkek mi?",
     desc: "ChatGPT'ye sanki cebinden yanlışlıkla çekilmiş doğal bir selfie çektiriyor. Gerçekçi hareket bulanıklığı, aşırı pozlama ve dağınık kadraj içeriyor.",
     cat: "ChatGPT",
@@ -1032,7 +922,6 @@ const DATA = [
     prompt: `ChatGPT, bir süredir benimlesin ve nasıl göründüğünü görmek istiyorum. Lütfen kendinin, sıradan bir iPhone çekimi gibi görünen bir fotoğrafını üret: belirgin bir konu yok, bilinçli bir kompozisyon yok; tamamen sıradan, hatta biraz başarısız bir anlık çekim gibi olsun. Fotoğrafta hafif hareket bulanıklığı, dengesiz ışık, hafif aşırı pozlama, garip bir açı ve dağınık bir kadraj olsun. Genel olarak, sanki telefonu cebinden çıkarırken yanlışlıkla çekilmiş, fazla gerçek ve gelişigüzel bir selfie hissi versin.`
   },
   {
-    id: "yuz-estetigi-raporu",
     title: "Yüz Estetiği Raporu",
     desc: "Yüklediğin fotoğrafı analiz edip 15 farklı kategori üzerinden puanlayan, gelişim önerileri sunan profesyonel görsel rapor üretiyor.",
     cat: "Görsel AI",
@@ -1074,7 +963,6 @@ Mevcut güçlü yönleri temel alarak uygulanabilir öneriler sun. Öneriler şu
 • Fotoğraf çekimi ve sosyal medya sunumu`
   },
   {
-    id: "minecraft-olum-ekrani",
     title: "Minecraft Ölüm Ekranı",
     desc: "Fotoğrafını Minecraft ölüm ekranına dönüştürüyor. Kardan arkaplan, piksel silahlar ve 'Öldün!' yazısıyla sinematik bir sahne oluşturuyor.",
     cat: "Minecraft",
@@ -1086,7 +974,6 @@ Mevcut güçlü yönleri temel alarak uygulanabilir öneriler sun. Öneriler şu
 Negative Prompt: baja calidad, cara borrosa, cuerpo distorsionado, extremidades adicionales, rasgos faciales incorrectos, cuerpo de dibujos animados, poco realista`
   },
   {
-    id: "minecraft-dunyasina-gir",
     title: "Minecraft Dünyasına Gir",
     desc: "Gerçek fotoğrafındaki kişiyi koruyarak arka planı birebir Minecraft voksel dünyasına dönüştürüyor. Yüz, cilt ve kıyafet detayları sıfır değişiklikle korunuyor.",
     cat: "Minecraft",
@@ -1096,7 +983,6 @@ Negative Prompt: baja calidad, cara borrosa, cuerpo distorsionado, extremidades 
     prompt: `Keep the human subject 100 percent photorealistic and untouched. No pixel filter, no stylization, no lighting remap on skin. Preserve exact facial detail, pores, fabric weave, hair strands, natural shadows. Expression and posture remain identical. Rebuild the background as a structurally accurate Minecraft voxel replica of the original location. Do not reinterpret. Match the exact layout, spacing, depth, and geometry from the reference image. If there is a path, replicate its exact curve and width using gravel or dirt blocks. If there are trees, match trunk positions, height ratios, canopy spread using appropriate log and leaf blocks. If there are buildings, recreate their silhouette, window placement, roof angle using Minecraft block geometry. If there are rocks, benches, fences, signs, convert them into block equivalents but maintain their exact position and proportion relative to the subject. Perspective must match the original photo perfectly. Horizon line, camera height, focal distance, framing, subject scale all identical. Any object physically touching the subject must convert into Minecraft logic.`
   },
   {
-    id: "sakin-is-adami-col-krizi",
     title: "Sakin İş Adamı — Çöl Krizi",
     desc: "Çölün ortasında sakince gazete okuyan bir iş adamı ile arkasında alev alev yanan klasik bir arabanın dramatik kontrastını üretiyor. Sinematik, lüks kriz estetiği.",
     cat: "Aksiyon",
@@ -1108,7 +994,6 @@ Negative Prompt: baja calidad, cara borrosa, cuerpo distorsionado, extremidades 
 
   /* ── YENİ PROMPT EKLEMEK İÇİN BURAYA KOPYALA ──
   ,{
-    id: "benzersiz-id",   // boşluksuz, küçük harf, tire ile — puan/yorum sisteminin çalışması için gerekli
     title: "Prompt Başlığı",
     desc: "Kısa açıklama — ne yapıyor?",
     cat: "ChatGPT",   // ChatGPT | Görsel AI | Minecraft | Aksiyon
@@ -1178,35 +1063,9 @@ function render() {
             <i class="ti ti-plus" aria-hidden="true"></i>
           </button>
         </div>
-        <div class="rate-box">
-          <div class="rate-row">
-            <div class="avg-stars" id="avgStars${i}"></div>
-            <span class="avg-text" id="avgText${i}">—</span>
-          </div>
-          <div class="star-input" id="starInput${i}">
-            <button data-v="5" onclick="rate('${p.id}',${i},5)" aria-label="5 yıldız ver"><i class="ti ti-star"></i></button>
-            <button data-v="4" onclick="rate('${p.id}',${i},4)" aria-label="4 yıldız ver"><i class="ti ti-star"></i></button>
-            <button data-v="3" onclick="rate('${p.id}',${i},3)" aria-label="3 yıldız ver"><i class="ti ti-star"></i></button>
-            <button data-v="2" onclick="rate('${p.id}',${i},2)" aria-label="2 yıldız ver"><i class="ti ti-star"></i></button>
-            <button data-v="1" onclick="rate('${p.id}',${i},1)" aria-label="1 yıldız ver"><i class="ti ti-star"></i></button>
-          </div>
-          <button class="comments-toggle" id="ctoggle${i}" data-id="${p.id}" onclick="toggleComments(${i})">
-            <i class="ti ti-message-circle" aria-hidden="true"></i> Yorumlar
-          </button>
-          <div class="comments-panel" id="cpanel${i}">
-            <div class="comments-list" id="clist${i}"></div>
-            <div class="comment-form">
-              <input type="text" id="cname${i}" placeholder="Adın (opsiyonel)" maxlength="30" />
-              <textarea id="ctext${i}" placeholder="Yorumunu yaz..." maxlength="300" rows="2"></textarea>
-              <button onclick="addComment('${p.id}', ${i})">Gönder</button>
-            </div>
-          </div>
-        </div>
       </div>
     </article>
   `).join('');
-
-  list.forEach((p, i) => loadRating(p.id, i));
 }
 
 function copyP(i) {
@@ -1243,128 +1102,6 @@ function closeLb() {
 }
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
-
-/* ============================================================
-   PUANLAMA VE YORUM SİSTEMİ
-   Herkese açık (shared) depolama kullanır: tüm ziyaretçiler
-   birbirinin puan ve yorumlarını görür. Kendi oyun (myvote)
-   sadece senin tarayıcında tutulur, tekrar oy verirsen eski
-   oyunun yerine geçer (puan şişmez).
-   ============================================================ */
-function escapeHtml(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-async function loadRating(id, i) {
-  let rec = { sum: 0, count: 0 };
-  try {
-    const res = await window.storage.get('rating:' + id, true);
-    if (res && res.value) rec = JSON.parse(res.value);
-  } catch (e) {}
-
-  const avg = rec.count ? rec.sum / rec.count : 0;
-  const avgTextEl = document.getElementById('avgText' + i);
-  if (avgTextEl) avgTextEl.textContent = rec.count ? avg.toFixed(1) + ' (' + rec.count + ' oy)' : 'Henüz puan yok';
-
-  const starsEl = document.getElementById('avgStars' + i);
-  if (starsEl) {
-    const rounded = Math.round(avg);
-    starsEl.innerHTML = [1,2,3,4,5].map(n => `<i class="ti ti-star${n <= rounded ? ' filled' : ''}"></i>`).join('');
-  }
-
-  let myVote = 0;
-  try {
-    const res2 = await window.storage.get('myvote:' + id, false);
-    if (res2 && res2.value) myVote = parseInt(res2.value, 10) || 0;
-  } catch (e) {}
-
-  const inputEl = document.getElementById('starInput' + i);
-  if (inputEl) {
-    inputEl.querySelectorAll('button').forEach(btn => {
-      const v = parseInt(btn.dataset.v, 10);
-      btn.classList.toggle('voted', myVote > 0 && v <= myVote);
-    });
-  }
-}
-
-async function rate(id, i, val) {
-  let rec = { sum: 0, count: 0 };
-  try {
-    const res = await window.storage.get('rating:' + id, true);
-    if (res && res.value) rec = JSON.parse(res.value);
-  } catch (e) {}
-
-  let prev = 0;
-  try {
-    const res2 = await window.storage.get('myvote:' + id, false);
-    if (res2 && res2.value) prev = parseInt(res2.value, 10) || 0;
-  } catch (e) {}
-
-  if (prev) {
-    rec.sum = rec.sum - prev + val;
-  } else {
-    rec.sum = rec.sum + val;
-    rec.count = rec.count + 1;
-  }
-
-  try {
-    await window.storage.set('rating:' + id, JSON.stringify(rec), true);
-    await window.storage.set('myvote:' + id, String(val), false);
-  } catch (e) {}
-
-  loadRating(id, i);
-}
-
-function toggleComments(i) {
-  const btn = document.getElementById('ctoggle' + i);
-  const panel = document.getElementById('cpanel' + i);
-  const isOpen = panel.classList.toggle('open');
-  if (isOpen) loadComments(btn.dataset.id, i);
-}
-
-async function loadComments(id, i) {
-  let list = [];
-  try {
-    const res = await window.storage.get('comments:' + id, true);
-    if (res && res.value) list = JSON.parse(res.value);
-  } catch (e) {}
-
-  const btn = document.getElementById('ctoggle' + i);
-  if (btn) btn.innerHTML = `<i class="ti ti-message-circle" aria-hidden="true"></i> Yorumlar (${list.length})`;
-
-  const el = document.getElementById('clist' + i);
-  if (!el) return;
-  if (!list.length) {
-    el.innerHTML = '<p style="font-size:11.5px;color:var(--muted);">Henüz yorum yok, ilk yorumu sen yaz!</p>';
-    return;
-  }
-  el.innerHTML = list.slice().reverse().map(c => `
-    <div class="comment-item"><b>${escapeHtml(c.name || 'Anonim')}</b><span>${escapeHtml(c.text)}</span></div>
-  `).join('');
-}
-
-async function addComment(id, i) {
-  const nameEl = document.getElementById('cname' + i);
-  const textEl = document.getElementById('ctext' + i);
-  const text = textEl.value.trim();
-  if (!text) return;
-
-  let list = [];
-  try {
-    const res = await window.storage.get('comments:' + id, true);
-    if (res && res.value) list = JSON.parse(res.value);
-  } catch (e) {}
-
-  list.push({ name: nameEl.value.trim().slice(0, 30), text: text.slice(0, 300), ts: Date.now() });
-  if (list.length > 50) list = list.slice(list.length - 50);
-
-  try {
-    await window.storage.set('comments:' + id, JSON.stringify(list), true);
-  } catch (e) {}
-
-  textEl.value = '';
-  loadComments(id, i);
-}
 
 /* ============================================================
    EN POPÜLER — statik öne çıkan promptlar şeridi
