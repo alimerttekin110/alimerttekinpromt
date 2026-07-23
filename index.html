@@ -158,15 +158,35 @@
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 20px;
-    padding: 5px 14px;
-    font-size: 11.5px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    color: var(--muted);
+    padding: 6px 18px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    color: var(--primary);
     margin-bottom: 16px;
   }
 
-  .eyebrow i { color: var(--primary); font-size: 13px; }
+  .eyebrow .amt-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--primary);
+    animation: dotBlink 1.6s ease-in-out infinite;
+  }
+
+  @keyframes dotBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.15; }
+  }
+
+  .eyebrow .amt-text { animation: textBlink 2.8s ease-in-out infinite; }
+
+  @keyframes textBlink {
+    0%, 92%, 100% { opacity: 1; }
+    95% { opacity: 0.3; }
+  }
 
   .hero h1 {
     font-family: 'Space Grotesk', sans-serif;
@@ -176,6 +196,18 @@
     margin-bottom: 8px;
     line-height: 1.15;
     letter-spacing: -0.01em;
+  }
+
+  .hero h1 .hero-sub {
+    display: block;
+    font-size: clamp(15px, 2.2vw, 19px);
+    font-weight: 600;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-top: 6px;
+    letter-spacing: 0.01em;
   }
 
   .hero p.lede {
@@ -282,11 +314,17 @@
   .follow-banner:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
 
   .follow-banner a {
-    color: var(--primary);
+    background: linear-gradient(135deg, #FEDA75 0%, #FA7E1E 25%, #D62976 50%, #962FBF 75%, #4F5BD5 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
     font-weight: 700;
     text-decoration: none;
     margin-left: 2px;
+    transition: filter 0.2s;
   }
+
+  .follow-banner a:hover { filter: brightness(1.15); text-decoration: underline; text-decoration-color: #D62976; }
 
   .follow-banner i { color: #E1306C; font-size: 15px; }
 
@@ -756,8 +794,8 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="eyebrow"><i class="ti ti-sparkles" aria-hidden="true"></i> Prompt Library</div>
-  <h1>500+ Premium AI Prompt</h1>
+  <div class="eyebrow"><span class="amt-dot" aria-hidden="true"></span><span class="amt-text">AMT</span></div>
+  <h1>Prompt Kütüphanesi<span class="hero-sub">Hoş Geldiniz</span></h1>
   <p class="lede">Videolardaki tüm promptlara buradan ulaş, örnek çıktıyı gör ve tek tıkla kopyala.</p>
   <div class="search-wrap">
     <i class="ti ti-search s-ico" aria-hidden="true"></i>
@@ -974,6 +1012,7 @@ let activeF = 'tümü';
 
 function setF(f, btn) {
   activeF = f;
+  document.getElementById('search').value = '';
   document.querySelectorAll('.fb').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   render();
