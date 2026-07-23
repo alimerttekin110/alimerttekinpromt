@@ -3,82 +3,69 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Ali Mert Tekin — Prompt Kütüphanesi</title>
+<title>Ali Mert Tekin — Prompt Library</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Playfair+Display:ital,wght@0,600;1,500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   /* ══════════════════════════════════════════
-     DARK MODE (Matrix) — default
+     DESIGN TOKENS — Dark (default)
      ══════════════════════════════════════════ */
   :root {
-    --neon: #00ff66;
-    --neon-dim: #00b34a;
-    --neon-glow: rgba(0, 255, 102, 0.35);
-    --grad: linear-gradient(135deg, #00ff66 0%, #00b8ff 100%);
-    --bg: #050807;
-    --surface: #0a100c;
-    --surface2: #0d1510;
-    --text: #d7ffe4;
-    --muted: #5f9d78;
-    --border: #14261a;
-    --scanline: rgba(0,255,102,0.03);
+    --bg: #0F1115;
+    --surface: #181B22;
+    --surface2: #1E222B;
+    --border: #2A2F3A;
+    --primary: #6C63FF;
+    --secondary: #8B5CF6;
+    --grad: linear-gradient(135deg, #6C63FF 0%, #8B5CF6 100%);
+    --text: #F8F8F8;
+    --muted: #9CA3AF;
+    --glow: rgba(108, 99, 255, 0.22);
+    --shadow-sm: 0 2px 10px rgba(0,0,0,0.25);
+    --shadow-md: 0 12px 28px rgba(0,0,0,0.35);
   }
 
   /* ══════════════════════════════════════════
-     LIGHT MODE
+     DESIGN TOKENS — Light
      ══════════════════════════════════════════ */
   html.light {
-    --neon: #059669;
-    --neon-dim: #047857;
-    --neon-glow: rgba(5, 150, 105, 0.18);
-    --grad: linear-gradient(135deg, #059669 0%, #0284c7 100%);
-    --bg: #f4faf6;
-    --surface: #ffffff;
-    --surface2: #eef7f1;
-    --text: #0f2418;
-    --muted: #5b7568;
-    --border: #d6e8dc;
-    --scanline: rgba(5,150,105,0.02);
+    --bg: #F7F7FA;
+    --surface: #FFFFFF;
+    --surface2: #F2F2F6;
+    --border: #E5E5EC;
+    --primary: #6C63FF;
+    --secondary: #8B5CF6;
+    --grad: linear-gradient(135deg, #6C63FF 0%, #8B5CF6 100%);
+    --text: #15161B;
+    --muted: #6B7280;
+    --glow: rgba(108, 99, 255, 0.14);
+    --shadow-sm: 0 2px 10px rgba(20,20,30,0.06);
+    --shadow-md: 0 16px 32px rgba(20,20,30,0.10);
   }
 
   body {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Inter', sans-serif;
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
     transition: background 0.3s, color 0.3s;
-    position: relative;
-    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
   }
 
-  /* subtle matrix scanline texture over everything */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    background: repeating-linear-gradient(
-      0deg,
-      var(--scanline) 0px,
-      var(--scanline) 1px,
-      transparent 1px,
-      transparent 3px
-    );
-    z-index: 1;
-    opacity: 0.6;
-  }
+  ::selection { background: var(--primary); color: #fff; }
 
-  ::selection { background: var(--neon); color: #000; }
+  a { color: inherit; }
 
   /* ── HEADER ── */
   .site-header {
-    background: var(--surface);
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border);
-    padding: 16px 24px;
+    padding: 14px 28px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -89,49 +76,53 @@
   }
 
   .logo-badge {
-    background: transparent;
-    border: 1.5px solid var(--neon);
-    border-radius: 6px;
-    padding: 6px 14px;
-    box-shadow: 0 0 12px var(--neon-glow);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 7px 14px;
   }
 
+  .logo-badge i { color: var(--primary); font-size: 15px; }
+
   .logo-badge span {
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 700;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
     font-size: 13px;
-    color: var(--neon);
-    letter-spacing: 0.03em;
+    color: var(--text);
+    letter-spacing: 0.01em;
     white-space: nowrap;
   }
 
   .header-right {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 18px;
   }
 
   .header-count {
-    font-size: 12px;
+    font-size: 12.5px;
     color: var(--muted);
   }
 
-  .header-count b { color: var(--neon); }
+  .header-count b { color: var(--primary); font-weight: 600; }
 
   /* ── THEME TOGGLE ── */
   .theme-toggle {
-    width: 42px;
-    height: 24px;
+    width: 40px;
+    height: 23px;
     border-radius: 20px;
     background: var(--surface2);
-    border: 1.5px solid var(--border);
+    border: 1px solid var(--border);
     position: relative;
     cursor: pointer;
     transition: border-color 0.2s;
     flex-shrink: 0;
   }
 
-  .theme-toggle:hover { border-color: var(--neon); }
+  .theme-toggle:hover { border-color: var(--primary); }
 
   .toggle-knob {
     position: absolute;
@@ -140,232 +131,266 @@
     width: 17px;
     height: 17px;
     border-radius: 50%;
-    background: var(--neon);
-    box-shadow: 0 0 8px var(--neon-glow);
+    background: var(--grad);
+    box-shadow: var(--shadow-sm);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 10px;
-    color: #000;
+    color: #fff;
     transition: transform 0.25s ease;
   }
 
-  html.light .toggle-knob { transform: translateX(18px); }
+  html.light .toggle-knob { transform: translateX(17px); }
 
-  /* ── HERO ── */
+  /* ── HERO (compact) ── */
   .hero {
     text-align: center;
-    padding: 56px 24px 40px;
-    position: relative;
-    z-index: 2;
+    padding: 40px 24px 26px;
+    max-width: 720px;
+    margin: 0 auto;
   }
 
-  .hero .prompt-line { display: none; }
-
-  .amt-mark {
+  .eyebrow {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 18px;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.35em;
-    color: #00ff66;
-    text-shadow:
-      0 0 6px rgba(0, 255, 102, 0.9),
-      0 0 14px rgba(0, 255, 102, 0.6),
-      0 0 28px rgba(0, 200, 120, 0.45);
-    animation: neonFlicker 4.2s infinite;
+    gap: 7px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin-bottom: 16px;
   }
 
-  .amt-mark::before,
-  .amt-mark::after {
-    content: '';
-    width: 28px;
-    height: 1px;
-    background: var(--border);
-  }
-
-  .cursor-blink {
-    display: inline-block;
-    width: 8px;
-    background: var(--neon);
-    animation: blink 1s step-end infinite;
-    margin-left: 2px;
-  }
-
-  @keyframes blink { 50% { opacity: 0; } }
+  .eyebrow i { color: var(--primary); font-size: 13px; }
 
   .hero h1 {
-    font-family: 'Playfair Display', 'Space Grotesk', serif;
-    font-style: italic;
-    font-weight: 600;
-    font-size: clamp(24px, 4.4vw, 38px);
-    color: var(--text);
-    margin-bottom: 12px;
-    line-height: 1.35;
-    letter-spacing: 0.01em;
-  }
-
-  .hero h1 span {
-    display: block;
     font-family: 'Space Grotesk', sans-serif;
-    font-style: normal;
     font-weight: 700;
-    font-size: clamp(28px, 6vw, 46px);
-    letter-spacing: 0.06em;
-    color: #00ff66;
-    text-shadow:
-      0 0 6px rgba(0, 255, 102, 0.9),
-      0 0 14px rgba(0, 255, 102, 0.6),
-      0 0 28px rgba(0, 200, 120, 0.45),
-      0 0 48px rgba(0, 200, 120, 0.3);
-    margin-top: 10px;
-    transform-origin: 30% 0%;
-    transform: rotate(-2.5deg) translateY(2px);
-    filter: saturate(0.85);
-    animation: neonFlicker 4.2s infinite, signSway 7s ease-in-out infinite;
+    font-size: clamp(26px, 4.2vw, 38px);
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
   }
 
-  @keyframes signSway {
-    0%, 100% { transform: rotate(-2.5deg) translateY(2px); }
-    30% { transform: rotate(-1.6deg) translateY(0px); }
-    50% { transform: rotate(-3.2deg) translateY(4px); }
-    75% { transform: rotate(-2deg) translateY(1px); }
-  }
-
-  @keyframes neonFlicker {
-    0%, 3%, 5%, 7%, 9%, 100% {
-      opacity: 1;
-      text-shadow:
-        0 0 6px rgba(0, 255, 102, 0.9),
-        0 0 14px rgba(0, 255, 102, 0.6),
-        0 0 28px rgba(0, 200, 120, 0.45),
-        0 0 48px rgba(0, 200, 120, 0.3);
-    }
-    4% { opacity: 0.35; text-shadow: none; }
-    6% { opacity: 0.85; text-shadow: 0 0 4px rgba(0, 255, 102, 0.5); }
-    8% { opacity: 0.25; text-shadow: none; }
-    35% { opacity: 1; }
-    36% { opacity: 0.4; text-shadow: none; }
-    37% { opacity: 1; }
-    62% { opacity: 1; }
-    63% { opacity: 0.3; text-shadow: none; }
-    64% { opacity: 0.9; }
-    65% { opacity: 0.5; text-shadow: none; }
-    66% { opacity: 1; }
-  }
-
-  .hero p {
+  .hero p.lede {
     font-size: 14px;
     color: var(--muted);
-    max-width: 480px;
-    margin: 0 auto 20px;
-    line-height: 1.7;
+    max-width: 420px;
+    margin: 0 auto 22px;
+    line-height: 1.6;
   }
-
-  /* ── FOLLOW REMINDER BANNER ── */
-  .follow-banner {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 30px;
-    padding: 8px 18px;
-    margin: 0 auto 28px;
-    font-size: 12.5px;
-    color: var(--text);
-    transition: border-color 0.2s, transform 0.2s;
-  }
-
-  .follow-banner a {
-    color: var(--neon);
-    font-weight: 700;
-    text-decoration: none;
-    margin-left: 2px;
-  }
-
-  .follow-banner a:hover { text-decoration: underline; }
-
-  .follow-banner i { color: var(--neon); }
-
-  .follow-wrap { display: flex; justify-content: center; }
 
   /* ── SEARCH ── */
   .search-wrap {
     position: relative;
-    max-width: 500px;
+    max-width: 460px;
     margin: 0 auto;
   }
 
   .search-wrap input {
     width: 100%;
-    padding: 12px 16px 12px 44px;
-    border: 1.5px solid var(--border);
-    border-radius: 8px;
+    padding: 14px 18px 14px 46px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
     font-size: 14px;
     background: var(--surface);
     color: var(--text);
     outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    font-family: 'JetBrains Mono', monospace;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+    font-family: 'Inter', sans-serif;
   }
 
   .search-wrap input::placeholder { color: var(--muted); }
 
   .search-wrap input:focus {
-    border-color: var(--neon);
-    box-shadow: 0 0 0 3px var(--neon-glow);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px var(--glow);
   }
 
   .search-wrap .s-ico {
     position: absolute;
-    left: 14px;
+    left: 17px;
     top: 50%;
     transform: translateY(-50%);
     color: var(--muted);
-    font-size: 18px;
+    font-size: 17px;
     pointer-events: none;
   }
 
-  /* ── FILTERS ── */
+  /* ── STATS ROW (decorative, under hero) ── */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    max-width: 680px;
+    margin: 26px auto 0;
+    padding: 0 24px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 8px;
+    text-align: center;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .stat-card:hover { transform: translateY(-3px); border-color: var(--primary); box-shadow: var(--shadow-sm); }
+
+  .stat-card b {
+    display: block;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+
+  .stat-card span {
+    font-size: 10.5px;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+
+  /* ── FOLLOW STRIP (outside hero) ── */
+  .follow-strip {
+    display: flex;
+    justify-content: center;
+    padding: 22px 24px 6px;
+  }
+
+  .follow-banner {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    padding: 9px 18px;
+    font-size: 12.5px;
+    color: var(--text);
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  }
+
+  .follow-banner:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+
+  .follow-banner a {
+    color: var(--primary);
+    font-weight: 700;
+    text-decoration: none;
+    margin-left: 2px;
+  }
+
+  .follow-banner i { color: #E1306C; font-size: 15px; }
+
+  /* ── FILTERS (pills) ── */
   .filters {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
     justify-content: center;
-    padding: 0 24px 24px;
-    position: relative;
-    z-index: 2;
+    padding: 18px 24px 8px;
   }
 
   .fb {
-    padding: 6px 16px;
-    border-radius: 6px;
-    border: 1.5px solid var(--border);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 18px;
+    border-radius: 30px;
+    border: 1px solid var(--border);
     background: var(--surface);
-    font-size: 12px;
+    font-size: 12.5px;
+    font-weight: 500;
     color: var(--muted);
     cursor: pointer;
-    transition: all 0.15s;
-    font-family: 'JetBrains Mono', monospace;
+    transition: all 0.18s;
+    font-family: 'Inter', sans-serif;
   }
 
-  .fb.active, .fb:hover {
-    border-color: var(--neon);
-    color: var(--neon);
-    box-shadow: 0 0 10px var(--neon-glow);
+  .fb:hover { border-color: var(--primary); color: var(--text); transform: translateY(-1px); }
+
+  .fb.active {
+    border-color: transparent;
+    background: var(--grad);
+    color: #fff;
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* ── POPULAR ── */
+  .popular-section {
+    max-width: 1060px;
+    margin: 8px auto 0;
+    padding: 20px 24px 0;
+  }
+
+  .popular-head { text-align: center; margin-bottom: 18px; }
+
+  .popular-head h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .popular-head p { font-size: 12.5px; color: var(--muted); }
+
+  .popular-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+    margin-bottom: 8px;
+  }
+
+  .popular-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .popular-card:hover { transform: translateY(-3px); border-color: var(--primary); box-shadow: var(--shadow-md); }
+
+  .popular-card img {
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .popular-card .p-title {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.35;
+  }
+
+  .popular-card .p-cat {
+    font-size: 10.5px;
+    color: var(--primary);
+    margin-top: 3px;
+    display: inline-block;
   }
 
   /* ── GRID ── */
   .container {
     max-width: 1060px;
     margin: 0 auto;
-    padding: 0 24px 80px;
-    position: relative;
-    z-index: 2;
+    padding: 28px 24px 80px;
   }
 
   .stats {
@@ -375,29 +400,29 @@
     margin-bottom: 20px;
   }
 
-  .stats b { color: var(--neon); }
+  .stats b { color: var(--primary); font-weight: 600; }
 
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
+    gap: 22px;
   }
 
   /* ── CARD ── */
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 18px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: box-shadow 0.2s, transform 0.15s, border-color 0.2s;
+    transition: box-shadow 0.25s, transform 0.2s, border-color 0.2s;
   }
 
   .card:hover {
-    border-color: var(--neon-dim);
-    box-shadow: 0 0 24px var(--neon-glow);
-    transform: translateY(-3px);
+    border-color: var(--primary);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-4px);
   }
 
   .card-img {
@@ -407,71 +432,70 @@
     overflow: hidden;
     cursor: zoom-in;
     background: var(--surface2);
+    border-radius: 18px 18px 0 0;
   }
 
   .card-img img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.35s, filter 0.3s;
+    transition: transform 0.4s ease;
     display: block;
-    filter: saturate(0.9);
   }
 
-  .card:hover .card-img img { transform: scale(1.05); filter: saturate(1.1); }
+  .card:hover .card-img img { transform: scale(1.03); }
 
   .img-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0,0,0,0);
-    transition: background 0.2s;
+    background: rgba(15,17,21,0);
+    backdrop-filter: blur(0px);
+    transition: background 0.25s, backdrop-filter 0.25s;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .card:hover .img-overlay { background: rgba(0,20,10,0.35); }
+  .card:hover .img-overlay { background: rgba(15,17,21,0.28); backdrop-filter: blur(1px); }
 
   .zoom-icon {
-    color: var(--neon);
-    font-size: 28px;
+    color: #fff;
+    font-size: 24px;
     opacity: 0;
     transition: opacity 0.2s;
-    text-shadow: 0 0 10px var(--neon-glow);
   }
 
   .card:hover .zoom-icon { opacity: 1; }
 
   .cat-badge {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 12px;
+    right: 12px;
     font-size: 10px;
-    font-weight: 700;
-    padding: 3px 10px;
-    border-radius: 5px;
-    background: var(--bg);
-    border: 1px solid var(--neon-dim);
-    color: var(--neon);
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
+    font-weight: 600;
+    padding: 4px 11px;
+    border-radius: 20px;
+    background: rgba(15,17,21,0.55);
+    backdrop-filter: blur(6px);
+    color: #fff;
+    letter-spacing: 0.02em;
   }
 
   .new-badge {
     position: absolute;
-    top: 10px;
-    left: 10px;
-    font-size: 9px;
+    top: 12px;
+    left: 12px;
+    font-size: 9.5px;
     font-weight: 700;
-    padding: 3px 9px;
-    border-radius: 5px;
-    background: var(--neon);
-    color: #000;
-    letter-spacing: 0.05em;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: var(--grad);
+    color: #fff;
+    letter-spacing: 0.04em;
   }
 
   .card-body {
-    padding: 18px;
+    padding: 22px;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -483,41 +507,51 @@
     gap: 5px;
     font-size: 10.5px;
     color: var(--muted);
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
 
   .card-title {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 700;
     color: var(--text);
-    margin-bottom: 7px;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
   }
 
   .card-desc {
-    font-size: 12.5px;
+    font-size: 13px;
     color: var(--muted);
     line-height: 1.65;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
     flex: 1;
   }
 
   /* ── PROMPT BOX ── */
+  .prompt-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+
   .prompt-box {
     background: var(--surface2);
-    border-left: 2px solid var(--neon);
-    border-radius: 0 6px 6px 0;
-    padding: 11px 13px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 13px 14px;
     font-size: 11.5px;
     color: var(--text);
-    opacity: 0.85;
+    opacity: 0.9;
     line-height: 1.75;
     font-family: 'JetBrains Mono', monospace;
-    margin-bottom: 13px;
-    max-height: 96px;
+    margin-bottom: 16px;
+    max-height: 92px;
     overflow: hidden;
     position: relative;
-    transition: max-height 0.4s ease;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
   }
 
   .prompt-box.expanded { max-height: 800px; }
@@ -526,7 +560,7 @@
     content: '';
     position: absolute;
     bottom: 0; left: 0; right: 0;
-    height: 32px;
+    height: 34px;
     background: linear-gradient(transparent, var(--surface2));
     pointer-events: none;
   }
@@ -536,43 +570,45 @@
 
   .btn-copy {
     flex: 1;
-    padding: 9px 0;
-    border-radius: 6px;
-    border: 1.5px solid var(--neon);
-    background: transparent;
-    color: var(--neon);
-    font-size: 12px;
+    width: 100%;
+    padding: 13px 0;
+    border-radius: 10px;
+    border: none;
+    background: var(--grad);
+    color: #fff;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
-    font-family: 'JetBrains Mono', monospace;
-    transition: background 0.2s, color 0.2s, transform 0.1s;
+    font-family: 'Inter', sans-serif;
+    transition: filter 0.2s, transform 0.15s, box-shadow 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 8px;
   }
 
-  .btn-copy:hover { background: var(--neon); color: #000; }
+  .btn-copy i { font-size: 16px; }
+  .btn-copy:hover { filter: brightness(1.08); box-shadow: var(--shadow-sm); }
   .btn-copy:active { transform: scale(0.97); }
-  .btn-copy.ok { background: var(--neon); color: #000; }
+  .btn-copy.ok { background: #17a673; }
 
   .btn-expand {
-    padding: 9px 14px;
-    border-radius: 6px;
-    border: 1.5px solid var(--border);
+    padding: 0 15px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
     background: transparent;
     color: var(--muted);
-    font-size: 13px;
+    font-size: 14px;
     cursor: pointer;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Inter', sans-serif;
     transition: border-color 0.15s, color 0.15s;
     display: flex;
     align-items: center;
   }
 
-  .btn-expand:hover { border-color: var(--neon); color: var(--neon); }
+  .btn-expand:hover { border-color: var(--primary); color: var(--primary); }
   .btn-expand i { transition: transform 0.3s; }
-  .btn-expand.open i { transform: rotate(180deg); }
+  .btn-expand.open i { transform: rotate(45deg); }
 
   /* ── EMPTY ── */
   .empty {
@@ -582,14 +618,14 @@
     grid-column: 1 / -1;
   }
 
-  .empty i { font-size: 36px; display: block; margin-bottom: 12px; color: var(--neon-dim); }
+  .empty i { font-size: 34px; display: block; margin-bottom: 12px; color: var(--primary); }
 
   /* ── LIGHTBOX ── */
   .lightbox {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.9);
+    background: rgba(10,10,14,0.92);
     z-index: 9999;
     align-items: center;
     justify-content: center;
@@ -602,18 +638,18 @@
   .lightbox img {
     max-width: min(90vw, 700px);
     max-height: 90vh;
-    border-radius: 10px;
+    border-radius: 14px;
     object-fit: contain;
     cursor: default;
-    box-shadow: 0 0 40px var(--neon-glow);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
   }
 
   .lb-close {
     position: fixed;
-    top: 18px;
-    right: 22px;
-    color: var(--neon);
-    font-size: 30px;
+    top: 20px;
+    right: 24px;
+    color: #fff;
+    font-size: 26px;
     cursor: pointer;
     background: none;
     border: none;
@@ -623,33 +659,31 @@
 
   .lb-close:hover { opacity: 1; }
 
-  /* ── SOCIAL ── */
+  /* ── SOCIAL (bottom, compact) ── */
   .social-section {
     background: var(--surface);
     border-top: 1px solid var(--border);
-    padding: 40px 24px;
+    padding: 30px 24px;
     text-align: center;
-    position: relative;
-    z-index: 2;
   }
 
   .social-section h2 {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 700;
     color: var(--text);
-    margin-bottom: 6px;
+    margin-bottom: 5px;
   }
 
   .social-section p {
-    font-size: 13px;
+    font-size: 12.5px;
     color: var(--muted);
-    margin-bottom: 24px;
+    margin-bottom: 18px;
   }
 
   .social-links {
     display: flex;
-    gap: 14px;
+    gap: 10px;
     justify-content: center;
     flex-wrap: wrap;
   }
@@ -657,45 +691,51 @@
   .social-btn {
     display: inline-flex;
     align-items: center;
-    gap: 9px;
-    padding: 12px 22px;
-    border-radius: 8px;
+    gap: 7px;
+    padding: 9px 16px;
+    border-radius: 10px;
     text-decoration: none;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12.5px;
     font-weight: 600;
-    transition: transform 0.15s, box-shadow 0.2s;
-    border: 1.5px solid var(--border);
+    transition: transform 0.15s, border-color 0.2s, box-shadow 0.2s;
+    border: 1px solid var(--border);
     background: var(--surface2);
     color: var(--text);
   }
 
-  .social-btn:hover { transform: translateY(-2px); border-color: var(--neon); box-shadow: 0 0 14px var(--neon-glow); }
+  .social-btn:hover { transform: translateY(-2px); border-color: var(--primary); box-shadow: var(--shadow-sm); }
   .social-btn:active { transform: scale(0.97); }
-  .social-btn i { font-size: 20px; }
+  .social-btn i { font-size: 16px; }
   .social-btn.youtube i { color: #ff0000; }
   .social-btn.tiktok i { color: var(--text); }
-  .social-btn.instagram i { color: #e6683c; }
+  .social-btn.instagram i { color: #E1306C; }
 
   /* ── FOOTER ── */
   .footer {
     text-align: center;
-    padding: 28px 24px;
-    font-size: 12px;
+    padding: 22px 24px;
+    font-size: 11.5px;
     color: var(--muted);
     border-top: 1px solid var(--border);
-    position: relative;
-    z-index: 2;
   }
 
-  .footer span { color: var(--neon); }
+  .footer span { color: var(--primary); }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 600px) {
-    .hero { padding: 40px 16px 28px; }
-    .container { padding: 0 16px 60px; }
+    .hero { padding: 32px 16px 20px; }
+    .stat-row { grid-template-columns: repeat(2, 1fr); padding: 0 16px; }
+    .container { padding: 20px 16px 60px; }
     .grid { grid-template-columns: 1fr; }
     .site-header { padding: 12px 16px; }
+    .card-body { padding: 18px; }
+    .filters { padding: 14px 16px 6px; }
+    .popular-section { padding: 16px 16px 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   }
 </style>
 </head>
@@ -704,42 +744,58 @@
 <!-- HEADER -->
 <header class="site-header">
   <div class="logo">
-    <div class="logo-badge"><span>ALİ MERT TEKİN</span></div>
+    <div class="logo-badge"><i class="ti ti-sparkles" aria-hidden="true"></i><span>ALİ MERT TEKİN</span></div>
   </div>
   <div class="header-right">
     <span class="header-count" id="hcount"></span>
     <button class="theme-toggle" id="themeToggle" aria-label="Açık/koyu mod değiştir" title="Açık/koyu mod">
-      <span class="toggle-knob"><i class="ti ti-bolt" id="toggleIcon" aria-hidden="true"></i></span>
+      <span class="toggle-knob"><i class="ti ti-moon" id="toggleIcon" aria-hidden="true"></i></span>
     </button>
   </div>
 </header>
 
 <!-- HERO -->
 <section class="hero">
-  <p class="prompt-line">system.init(prompt_library)<span class="cursor-blink"></span></p>
-  <div class="amt-mark">AMT</div>
-  <h1>Ali Mert Tekin Kütüphanesi<span>Hoş Geldiniz</span></h1>
-  <p>Videolardaki tüm promptlara buradan ulaş, örnek çıktıyı gör ve tek tıkla kopyala.</p>
-  <div class="follow-wrap">
-    <div class="follow-banner">
-      <i class="ti ti-brand-instagram" aria-hidden="true"></i>
-      Daha fazlası için <a href="https://www.instagram.com/alimerttekin0/" target="_blank" rel="noopener">takip etmeyi</a> unutma!
-    </div>
-  </div>
+  <div class="eyebrow"><i class="ti ti-sparkles" aria-hidden="true"></i> Prompt Library</div>
+  <h1>500+ Premium AI Prompt</h1>
+  <p class="lede">Videolardaki tüm promptlara buradan ulaş, örnek çıktıyı gör ve tek tıkla kopyala.</p>
   <div class="search-wrap">
     <i class="ti ti-search s-ico" aria-hidden="true"></i>
-    <input type="text" id="search" placeholder="Prompt ara..." oninput="render()" aria-label="Prompt ara" />
+    <input type="text" id="search" placeholder="500+ prompt içerisinde ara..." oninput="render()" aria-label="Prompt ara" />
+  </div>
+  <div class="stat-row">
+    <div class="stat-card"><b>500+</b><span>Prompt</span></div>
+    <div class="stat-card"><b>15+</b><span>Kategori</span></div>
+    <div class="stat-card"><b>Her Hafta</b><span>Yeni İçerik</span></div>
+    <div class="stat-card"><b>Tek Tık</b><span>Kopyala</span></div>
   </div>
 </section>
+
+<!-- FOLLOW STRIP (hero dışında) -->
+<div class="follow-strip">
+  <div class="follow-banner">
+    <i class="ti ti-brand-instagram" aria-hidden="true"></i>
+    Daha fazlası için <a href="https://www.instagram.com/alimerttekin0/" target="_blank" rel="noopener">takip etmeyi</a> unutma!
+  </div>
+</div>
 
 <!-- FILTERS -->
 <div class="filters" role="group" aria-label="Kategori filtresi">
   <button class="fb active" onclick="setF('tümü', this)">Tümü</button>
-  <button class="fb" onclick="setF('ChatGPT', this)">ChatGPT</button>
-  <button class="fb" onclick="setF('Görsel AI', this)">Görsel AI</button>
-  <button class="fb" onclick="setF('Minecraft', this)">Minecraft</button>
-  <button class="fb" onclick="setF('Aksiyon', this)">Aksiyon</button>
+  <button class="fb" onclick="setF('ChatGPT', this)">✨ ChatGPT</button>
+  <button class="fb" onclick="setF('Görsel AI', this)">🎨 Görsel AI</button>
+  <button class="fb" onclick="setF('Minecraft', this)">🎮 Minecraft</button>
+  <button class="fb" onclick="setF('Aksiyon', this)">⚡ Aksiyon</button>
 </div>
+
+<!-- POPULAR -->
+<section class="popular-section">
+  <div class="popular-head">
+    <h2>🔥 En Popüler</h2>
+    <p>Bu hafta en çok kullanılan promptlar.</p>
+  </div>
+  <div class="popular-row" id="popularRow"></div>
+</section>
 
 <!-- MAIN -->
 <main class="container">
@@ -766,7 +822,7 @@
 
 <!-- FOOTER -->
 <footer class="footer">
-  <p>Ali Mert Tekin tarafından hazırlanmıştır <span>// end_of_file</span></p>
+  <p>Ali Mert Tekin tarafından hazırlanmıştır <span>// prompt-library</span></p>
 </footer>
 
 <!-- LIGHTBOX -->
@@ -789,7 +845,7 @@ function applyTheme(mode) {
     toggleIcon.className = 'ti ti-sun';
   } else {
     htmlEl.classList.remove('light');
-    toggleIcon.className = 'ti ti-bolt';
+    toggleIcon.className = 'ti ti-moon';
   }
 }
 
@@ -932,8 +988,6 @@ function getFiltered() {
   });
 }
 
-const catClass = { 'ChatGPT': 'chatgpt', 'Görsel AI': 'gorsel', 'Minecraft': 'minecraft', 'Aksiyon': 'aksiyon' };
-
 function render() {
   const list = getFiltered();
   document.getElementById('stats').innerHTML = `<b>${list.length}</b> prompt bulundu`;
@@ -960,13 +1014,14 @@ function render() {
         <div class="ai-tag"><i class="ti ti-robot" aria-hidden="true"></i> ${p.ai}</div>
         <h2 class="card-title">${p.title}</h2>
         <p class="card-desc">${p.desc}</p>
+        <div class="prompt-label">Prompt Preview</div>
         <div class="prompt-box" id="pb${i}">${p.prompt.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g, '<br>')}</div>
         <div class="card-actions">
           <button class="btn-copy" id="bc${i}" onclick="copyP(${i})">
             <i class="ti ti-copy" aria-hidden="true"></i> Kopyala
           </button>
           <button class="btn-expand" id="be${i}" onclick="toggleExp(${i})" aria-label="Promptu genişlet">
-            <i class="ti ti-chevron-down" aria-hidden="true"></i>
+            <i class="ti ti-plus" aria-hidden="true"></i>
           </button>
         </div>
       </div>
@@ -1009,7 +1064,25 @@ function closeLb() {
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
 
+/* ============================================================
+   EN POPÜLER — statik öne çıkan promptlar şeridi
+   Aramayı/filtreyi etkilemez; tıklanınca ilgili promptu arar.
+   ============================================================ */
+function renderPopular() {
+  const picks = DATA.slice(0, 3);
+  document.getElementById('popularRow').innerHTML = picks.map(p => `
+    <div class="popular-card" onclick="document.getElementById('search').value='${p.title.replace(/'/g, "\\'")}'; render(); document.querySelector('.container').scrollIntoView({behavior:'smooth'});">
+      <img src="${p.img}" alt="${p.title}" loading="lazy" />
+      <div>
+        <div class="p-title">${p.title}</div>
+        <span class="p-cat">${p.cat}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
 render();
+renderPopular();
 </script>
 </body>
 </html>
