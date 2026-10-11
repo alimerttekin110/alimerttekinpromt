@@ -1,71 +1,84 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" data-theme="dark">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Ali Mert Tekin — Prompt Library</title>
+<title>Ali Mert Tekin — Prompt Kütüphanesi</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   /* ══════════════════════════════════════════
-     DESIGN TOKENS — Dark (default)
+     DARK MODE (Matrix) — default
      ══════════════════════════════════════════ */
   :root {
-    --bg: #0F1115;
-    --surface: #181B22;
-    --surface2: #1E222B;
-    --border: #2A2F3A;
-    --primary: #6C63FF;
-    --secondary: #8B5CF6;
-    --grad: linear-gradient(135deg, #6C63FF 0%, #8B5CF6 100%);
-    --text: #F8F8F8;
-    --muted: #9CA3AF;
-    --glow: rgba(108, 99, 255, 0.22);
-    --shadow-sm: 0 2px 10px rgba(0,0,0,0.25);
-    --shadow-md: 0 12px 28px rgba(0,0,0,0.35);
+    --neon: #00ff66;
+    --neon-dim: #00b34a;
+    --neon-glow: rgba(0, 255, 102, 0.35);
+    --grad: linear-gradient(135deg, #00ff66 0%, #00b8ff 100%);
+    --bg: #050807;
+    --surface: #0a100c;
+    --surface2: #0d1510;
+    --text: #d7ffe4;
+    --muted: #5f9d78;
+    --border: #14261a;
+    --scanline: rgba(0,255,102,0.03);
   }
 
   /* ══════════════════════════════════════════
-     DESIGN TOKENS — Light
+     LIGHT MODE
      ══════════════════════════════════════════ */
   html.light {
-    --bg: #F7F7FA;
-    --surface: #FFFFFF;
-    --surface2: #F2F2F6;
-    --border: #E5E5EC;
-    --primary: #6C63FF;
-    --secondary: #8B5CF6;
-    --grad: linear-gradient(135deg, #6C63FF 0%, #8B5CF6 100%);
-    --text: #15161B;
-    --muted: #6B7280;
-    --glow: rgba(108, 99, 255, 0.14);
-    --shadow-sm: 0 2px 10px rgba(20,20,30,0.06);
-    --shadow-md: 0 16px 32px rgba(20,20,30,0.10);
+    --neon: #059669;
+    --neon-dim: #047857;
+    --neon-glow: rgba(5, 150, 105, 0.18);
+    --grad: linear-gradient(135deg, #059669 0%, #0284c7 100%);
+    --bg: #f4faf6;
+    --surface: #ffffff;
+    --surface2: #eef7f1;
+    --text: #0f2418;
+    --muted: #5b7568;
+    --border: #d6e8dc;
+    --scanline: rgba(5,150,105,0.02);
   }
 
   body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'JetBrains Mono', monospace;
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
     transition: background 0.3s, color 0.3s;
-    -webkit-font-smoothing: antialiased;
+    position: relative;
+    overflow-x: hidden;
   }
 
-  ::selection { background: var(--primary); color: #fff; }
+  /* subtle matrix scanline texture over everything */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      0deg,
+      var(--scanline) 0px,
+      var(--scanline) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    z-index: 1;
+    opacity: 0.6;
+  }
 
-  a { color: inherit; }
+  ::selection { background: var(--neon); color: #000; }
 
   /* ── HEADER ── */
   .site-header {
-    background: color-mix(in srgb, var(--bg) 88%, transparent);
-    backdrop-filter: blur(10px);
+    background: var(--surface);
     border-bottom: 1px solid var(--border);
-    padding: 14px 28px;
+    padding: 16px 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -76,53 +89,49 @@
   }
 
   .logo-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 7px 14px;
+    background: transparent;
+    border: 1.5px solid var(--neon);
+    border-radius: 6px;
+    padding: 6px 14px;
+    box-shadow: 0 0 12px var(--neon-glow);
   }
 
-  .logo-badge i { color: var(--primary); font-size: 15px; }
-
   .logo-badge span {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
     font-size: 13px;
-    color: var(--text);
-    letter-spacing: 0.01em;
+    color: var(--neon);
+    letter-spacing: 0.03em;
     white-space: nowrap;
   }
 
   .header-right {
     display: flex;
     align-items: center;
-    gap: 18px;
+    gap: 16px;
   }
 
   .header-count {
-    font-size: 12.5px;
+    font-size: 12px;
     color: var(--muted);
   }
 
-  .header-count b { color: var(--primary); font-weight: 600; }
+  .header-count b { color: var(--neon); }
 
   /* ── THEME TOGGLE ── */
   .theme-toggle {
-    width: 40px;
-    height: 23px;
+    width: 42px;
+    height: 24px;
     border-radius: 20px;
     background: var(--surface2);
-    border: 1px solid var(--border);
+    border: 1.5px solid var(--border);
     position: relative;
     cursor: pointer;
     transition: border-color 0.2s;
     flex-shrink: 0;
   }
 
-  .theme-toggle:hover { border-color: var(--primary); }
+  .theme-toggle:hover { border-color: var(--neon); }
 
   .toggle-knob {
     position: absolute;
@@ -131,304 +140,140 @@
     width: 17px;
     height: 17px;
     border-radius: 50%;
-    background: var(--grad);
-    box-shadow: var(--shadow-sm);
+    background: var(--neon);
+    box-shadow: 0 0 8px var(--neon-glow);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 10px;
-    color: #fff;
+    color: #000;
     transition: transform 0.25s ease;
   }
 
-  html.light .toggle-knob { transform: translateX(17px); }
+  html.light .toggle-knob { transform: translateX(18px); }
 
-  /* ── HERO (compact) ── */
+  /* ── HERO ── */
   .hero {
     text-align: center;
-    padding: 40px 24px 26px;
-    max-width: 720px;
-    margin: 0 auto;
+    padding: 56px 24px 40px;
+    position: relative;
+    z-index: 2;
   }
 
-  .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 6px 18px;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.25em;
-    color: var(--primary);
-    margin-bottom: 16px;
+  .hero .prompt-line {
+    font-size: 12px;
+    color: var(--neon-dim);
+    margin-bottom: 14px;
+    letter-spacing: 0.05em;
   }
 
-  .eyebrow .amt-dot {
+  .hero .prompt-line::before { content: '> '; color: var(--neon); }
+
+  .cursor-blink {
     display: inline-block;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--primary);
-    animation: dotBlink 1.6s ease-in-out infinite;
+    width: 8px;
+    background: var(--neon);
+    animation: blink 1s step-end infinite;
+    margin-left: 2px;
   }
 
-  @keyframes dotBlink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.15; }
-  }
-
-  .eyebrow .amt-text { animation: textBlink 2.8s ease-in-out infinite; }
-
-  @keyframes textBlink {
-    0%, 92%, 100% { opacity: 1; }
-    95% { opacity: 0.3; }
-  }
+  @keyframes blink { 50% { opacity: 0; } }
 
   .hero h1 {
     font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(26px, 5vw, 42px);
     font-weight: 700;
-    font-size: clamp(26px, 4.2vw, 38px);
     color: var(--text);
-    margin-bottom: 8px;
-    line-height: 1.15;
-    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+    line-height: 1.2;
   }
 
-  .hero h1 .hero-sub {
-    display: block;
-    font-size: clamp(15px, 2.2vw, 19px);
-    font-weight: 600;
-    background: var(--grad);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    margin-top: 6px;
-    letter-spacing: 0.01em;
+  .hero h1 span {
+    color: var(--neon);
+    text-shadow: 0 0 18px var(--neon-glow);
   }
 
-  .hero p.lede {
+  .hero p {
     font-size: 14px;
     color: var(--muted);
-    max-width: 420px;
-    margin: 0 auto 22px;
-    line-height: 1.6;
+    max-width: 480px;
+    margin: 0 auto 28px;
+    line-height: 1.7;
   }
 
   /* ── SEARCH ── */
   .search-wrap {
     position: relative;
-    max-width: 460px;
+    max-width: 500px;
     margin: 0 auto;
   }
 
   .search-wrap input {
     width: 100%;
-    padding: 14px 18px 14px 46px;
-    border: 1px solid var(--border);
-    border-radius: 12px;
+    padding: 12px 16px 12px 44px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
     font-size: 14px;
     background: var(--surface);
     color: var(--text);
     outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
-    font-family: 'Inter', sans-serif;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-family: 'JetBrains Mono', monospace;
   }
 
   .search-wrap input::placeholder { color: var(--muted); }
 
   .search-wrap input:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 4px var(--glow);
+    border-color: var(--neon);
+    box-shadow: 0 0 0 3px var(--neon-glow);
   }
 
   .search-wrap .s-ico {
     position: absolute;
-    left: 17px;
+    left: 14px;
     top: 50%;
     transform: translateY(-50%);
     color: var(--muted);
-    font-size: 17px;
+    font-size: 18px;
     pointer-events: none;
   }
 
-  /* ── STATS ROW (decorative, under hero) ── */
-  .stat-row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    max-width: 680px;
-    margin: 26px auto 0;
-    padding: 0 24px;
-  }
-
-  .stat-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px 8px;
-    text-align: center;
-    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-  }
-
-  .stat-card:hover { transform: translateY(-3px); border-color: var(--primary); box-shadow: var(--shadow-sm); }
-
-  .stat-card b {
-    display: block;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 2px;
-  }
-
-  .stat-card span {
-    font-size: 10.5px;
-    color: var(--muted);
-    letter-spacing: 0.02em;
-  }
-
-  /* ── FOLLOW STRIP (outside hero) ── */
-  .follow-strip {
-    display: flex;
-    justify-content: center;
-    padding: 22px 24px 6px;
-  }
-
-  .follow-banner {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 30px;
-    padding: 9px 18px;
-    font-size: 12.5px;
-    color: var(--text);
-    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
-  }
-
-  .follow-banner:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
-
-  .follow-banner a {
-    background: linear-gradient(135deg, #FEDA75 0%, #FA7E1E 25%, #D62976 50%, #962FBF 75%, #4F5BD5 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    font-weight: 700;
-    text-decoration: none;
-    margin-left: 2px;
-    transition: filter 0.2s;
-  }
-
-  .follow-banner a:hover { filter: brightness(1.15); text-decoration: underline; text-decoration-color: #D62976; }
-
-  .follow-banner i { color: #E1306C; font-size: 15px; }
-
-  /* ── FILTERS (pills) ── */
+  /* ── FILTERS ── */
   .filters {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
     justify-content: center;
-    padding: 18px 24px 8px;
+    padding: 0 24px 24px;
+    position: relative;
+    z-index: 2;
   }
 
   .fb {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 18px;
-    border-radius: 30px;
-    border: 1px solid var(--border);
+    padding: 6px 16px;
+    border-radius: 6px;
+    border: 1.5px solid var(--border);
     background: var(--surface);
-    font-size: 12.5px;
-    font-weight: 500;
+    font-size: 12px;
     color: var(--muted);
     cursor: pointer;
-    transition: all 0.18s;
-    font-family: 'Inter', sans-serif;
+    transition: all 0.15s;
+    font-family: 'JetBrains Mono', monospace;
   }
 
-  .fb:hover { border-color: var(--primary); color: var(--text); transform: translateY(-1px); }
-
-  .fb.active {
-    border-color: transparent;
-    background: var(--grad);
-    color: #fff;
-    box-shadow: var(--shadow-sm);
-  }
-
-  /* ── POPULAR ── */
-  .popular-section {
-    max-width: 1060px;
-    margin: 8px auto 0;
-    padding: 20px 24px 0;
-  }
-
-  .popular-head { text-align: center; margin-bottom: 18px; }
-
-  .popular-head h2 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 4px;
-  }
-
-  .popular-head p { font-size: 12.5px; color: var(--muted); }
-
-  .popular-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 14px;
-    margin-bottom: 8px;
-  }
-
-  .popular-card {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 10px;
-    cursor: pointer;
-    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-  }
-
-  .popular-card:hover { transform: translateY(-3px); border-color: var(--primary); box-shadow: var(--shadow-md); }
-
-  .popular-card img {
-    width: 52px;
-    height: 52px;
-    border-radius: 10px;
-    object-fit: cover;
-    flex-shrink: 0;
-  }
-
-  .popular-card .p-title {
-    font-size: 12.5px;
-    font-weight: 600;
-    color: var(--text);
-    line-height: 1.35;
-  }
-
-  .popular-card .p-cat {
-    font-size: 10.5px;
-    color: var(--primary);
-    margin-top: 3px;
-    display: inline-block;
+  .fb.active, .fb:hover {
+    border-color: var(--neon);
+    color: var(--neon);
+    box-shadow: 0 0 10px var(--neon-glow);
   }
 
   /* ── GRID ── */
   .container {
     max-width: 1060px;
     margin: 0 auto;
-    padding: 28px 24px 80px;
+    padding: 0 24px 80px;
+    position: relative;
+    z-index: 2;
   }
 
   .stats {
@@ -438,29 +283,29 @@
     margin-bottom: 20px;
   }
 
-  .stats b { color: var(--primary); font-weight: 600; }
+  .stats b { color: var(--neon); }
 
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 22px;
+    gap: 20px;
   }
 
   /* ── CARD ── */
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 18px;
+    border-radius: 10px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: box-shadow 0.25s, transform 0.2s, border-color 0.2s;
+    transition: box-shadow 0.2s, transform 0.15s, border-color 0.2s;
   }
 
   .card:hover {
-    border-color: var(--primary);
-    box-shadow: var(--shadow-md);
-    transform: translateY(-4px);
+    border-color: var(--neon-dim);
+    box-shadow: 0 0 24px var(--neon-glow);
+    transform: translateY(-3px);
   }
 
   .card-img {
@@ -470,70 +315,71 @@
     overflow: hidden;
     cursor: zoom-in;
     background: var(--surface2);
-    border-radius: 18px 18px 0 0;
   }
 
   .card-img img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.4s ease;
+    transition: transform 0.35s, filter 0.3s;
     display: block;
+    filter: saturate(0.9);
   }
 
-  .card:hover .card-img img { transform: scale(1.03); }
+  .card:hover .card-img img { transform: scale(1.05); filter: saturate(1.1); }
 
   .img-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(15,17,21,0);
-    backdrop-filter: blur(0px);
-    transition: background 0.25s, backdrop-filter 0.25s;
+    background: rgba(0,0,0,0);
+    transition: background 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .card:hover .img-overlay { background: rgba(15,17,21,0.28); backdrop-filter: blur(1px); }
+  .card:hover .img-overlay { background: rgba(0,20,10,0.35); }
 
   .zoom-icon {
-    color: #fff;
-    font-size: 24px;
+    color: var(--neon);
+    font-size: 28px;
     opacity: 0;
     transition: opacity 0.2s;
+    text-shadow: 0 0 10px var(--neon-glow);
   }
 
   .card:hover .zoom-icon { opacity: 1; }
 
   .cat-badge {
     position: absolute;
-    top: 12px;
-    right: 12px;
+    top: 10px;
+    right: 10px;
     font-size: 10px;
-    font-weight: 600;
-    padding: 4px 11px;
-    border-radius: 20px;
-    background: rgba(15,17,21,0.55);
-    backdrop-filter: blur(6px);
-    color: #fff;
-    letter-spacing: 0.02em;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 5px;
+    background: var(--bg);
+    border: 1px solid var(--neon-dim);
+    color: var(--neon);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
   }
 
   .new-badge {
     position: absolute;
-    top: 12px;
-    left: 12px;
-    font-size: 9.5px;
+    top: 10px;
+    left: 10px;
+    font-size: 9px;
     font-weight: 700;
-    padding: 4px 10px;
-    border-radius: 20px;
-    background: var(--grad);
-    color: #fff;
-    letter-spacing: 0.04em;
+    padding: 3px 9px;
+    border-radius: 5px;
+    background: var(--neon);
+    color: #000;
+    letter-spacing: 0.05em;
   }
 
   .card-body {
-    padding: 22px;
+    padding: 18px;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -545,51 +391,41 @@
     gap: 5px;
     font-size: 10.5px;
     color: var(--muted);
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
 
   .card-title {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
     color: var(--text);
-    margin-bottom: 8px;
-    letter-spacing: -0.01em;
+    margin-bottom: 7px;
   }
 
   .card-desc {
-    font-size: 13px;
+    font-size: 12.5px;
     color: var(--muted);
     line-height: 1.65;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
     flex: 1;
   }
 
   /* ── PROMPT BOX ── */
-  .prompt-label {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    color: var(--muted);
-    margin-bottom: 6px;
-    text-transform: uppercase;
-  }
-
   .prompt-box {
     background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 13px 14px;
+    border-left: 2px solid var(--neon);
+    border-radius: 0 6px 6px 0;
+    padding: 11px 13px;
     font-size: 11.5px;
     color: var(--text);
-    opacity: 0.9;
+    opacity: 0.85;
     line-height: 1.75;
     font-family: 'JetBrains Mono', monospace;
-    margin-bottom: 16px;
-    max-height: 92px;
+    margin-bottom: 13px;
+    max-height: 96px;
     overflow: hidden;
     position: relative;
-    transition: max-height 0.4s ease, opacity 0.3s ease;
+    transition: max-height 0.4s ease;
   }
 
   .prompt-box.expanded { max-height: 800px; }
@@ -598,7 +434,7 @@
     content: '';
     position: absolute;
     bottom: 0; left: 0; right: 0;
-    height: 34px;
+    height: 32px;
     background: linear-gradient(transparent, var(--surface2));
     pointer-events: none;
   }
@@ -608,45 +444,43 @@
 
   .btn-copy {
     flex: 1;
-    width: 100%;
-    padding: 13px 0;
-    border-radius: 10px;
-    border: none;
-    background: var(--grad);
-    color: #fff;
-    font-size: 13px;
+    padding: 9px 0;
+    border-radius: 6px;
+    border: 1.5px solid var(--neon);
+    background: transparent;
+    color: var(--neon);
+    font-size: 12px;
     font-weight: 600;
     cursor: pointer;
-    font-family: 'Inter', sans-serif;
-    transition: filter 0.2s, transform 0.15s, box-shadow 0.2s;
+    font-family: 'JetBrains Mono', monospace;
+    transition: background 0.2s, color 0.2s, transform 0.1s;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
   }
 
-  .btn-copy i { font-size: 16px; }
-  .btn-copy:hover { filter: brightness(1.08); box-shadow: var(--shadow-sm); }
+  .btn-copy:hover { background: var(--neon); color: #000; }
   .btn-copy:active { transform: scale(0.97); }
-  .btn-copy.ok { background: #17a673; }
+  .btn-copy.ok { background: var(--neon); color: #000; }
 
   .btn-expand {
-    padding: 0 15px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
+    padding: 9px 14px;
+    border-radius: 6px;
+    border: 1.5px solid var(--border);
     background: transparent;
     color: var(--muted);
-    font-size: 14px;
+    font-size: 13px;
     cursor: pointer;
-    font-family: 'Inter', sans-serif;
+    font-family: 'JetBrains Mono', monospace;
     transition: border-color 0.15s, color 0.15s;
     display: flex;
     align-items: center;
   }
 
-  .btn-expand:hover { border-color: var(--primary); color: var(--primary); }
+  .btn-expand:hover { border-color: var(--neon); color: var(--neon); }
   .btn-expand i { transition: transform 0.3s; }
-  .btn-expand.open i { transform: rotate(45deg); }
+  .btn-expand.open i { transform: rotate(180deg); }
 
   /* ── EMPTY ── */
   .empty {
@@ -656,14 +490,14 @@
     grid-column: 1 / -1;
   }
 
-  .empty i { font-size: 34px; display: block; margin-bottom: 12px; color: var(--primary); }
+  .empty i { font-size: 36px; display: block; margin-bottom: 12px; color: var(--neon-dim); }
 
   /* ── LIGHTBOX ── */
   .lightbox {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(10,10,14,0.92);
+    background: rgba(0,0,0,0.9);
     z-index: 9999;
     align-items: center;
     justify-content: center;
@@ -676,18 +510,18 @@
   .lightbox img {
     max-width: min(90vw, 700px);
     max-height: 90vh;
-    border-radius: 14px;
+    border-radius: 10px;
     object-fit: contain;
     cursor: default;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    box-shadow: 0 0 40px var(--neon-glow);
   }
 
   .lb-close {
     position: fixed;
-    top: 20px;
-    right: 24px;
-    color: #fff;
-    font-size: 26px;
+    top: 18px;
+    right: 22px;
+    color: var(--neon);
+    font-size: 30px;
     cursor: pointer;
     background: none;
     border: none;
@@ -697,31 +531,33 @@
 
   .lb-close:hover { opacity: 1; }
 
-  /* ── SOCIAL (bottom, compact) ── */
+  /* ── SOCIAL ── */
   .social-section {
     background: var(--surface);
     border-top: 1px solid var(--border);
-    padding: 30px 24px;
+    padding: 40px 24px;
     text-align: center;
+    position: relative;
+    z-index: 2;
   }
 
   .social-section h2 {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 700;
     color: var(--text);
-    margin-bottom: 5px;
+    margin-bottom: 6px;
   }
 
   .social-section p {
-    font-size: 12.5px;
+    font-size: 13px;
     color: var(--muted);
-    margin-bottom: 18px;
+    margin-bottom: 24px;
   }
 
   .social-links {
     display: flex;
-    gap: 10px;
+    gap: 14px;
     justify-content: center;
     flex-wrap: wrap;
   }
@@ -729,117 +565,147 @@
   .social-btn {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
-    padding: 9px 16px;
-    border-radius: 10px;
+    gap: 9px;
+    padding: 12px 22px;
+    border-radius: 8px;
     text-decoration: none;
-    font-family: 'Inter', sans-serif;
-    font-size: 12.5px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
     font-weight: 600;
-    transition: transform 0.15s, border-color 0.2s, box-shadow 0.2s;
-    border: 1px solid var(--border);
+    transition: transform 0.15s, box-shadow 0.2s;
+    border: 1.5px solid var(--border);
     background: var(--surface2);
     color: var(--text);
   }
 
-  .social-btn:hover { transform: translateY(-2px); border-color: var(--primary); box-shadow: var(--shadow-sm); }
+  .social-btn:hover { transform: translateY(-2px); border-color: var(--neon); box-shadow: 0 0 14px var(--neon-glow); }
   .social-btn:active { transform: scale(0.97); }
-  .social-btn i { font-size: 16px; }
+  .social-btn i { font-size: 20px; }
   .social-btn.youtube i { color: #ff0000; }
   .social-btn.tiktok i { color: var(--text); }
-  .social-btn.instagram i { color: #E1306C; }
+  .social-btn.instagram i { color: #e6683c; }
 
   /* ── FOOTER ── */
   .footer {
     text-align: center;
-    padding: 22px 24px;
-    font-size: 11.5px;
+    padding: 28px 24px;
+    font-size: 12px;
     color: var(--muted);
     border-top: 1px solid var(--border);
+    position: relative;
+    z-index: 2;
   }
 
-  .footer span { color: var(--primary); }
+  .footer span { color: var(--neon); }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 600px) {
-    .hero { padding: 32px 16px 20px; }
-    .stat-row { grid-template-columns: repeat(2, 1fr); padding: 0 16px; }
-    .container { padding: 20px 16px 60px; }
+    .hero { padding: 40px 16px 28px; }
+    .container { padding: 0 16px 60px; }
     .grid { grid-template-columns: 1fr; }
     .site-header { padding: 12px 16px; }
-    .card-body { padding: 18px; }
-    .filters { padding: 14px 16px 6px; }
-    .popular-section { padding: 16px 16px 0; }
   }
+/* ═══ MATRIX TEMA ═══ */
+:root{--green:#00ff41;--blue:#00ff41;--grad:linear-gradient(135deg,#00ff41 0%,#00cc33 100%);--bg:#0a0f0a;--surface:#0f1a0f;--text:#d8ffd8;--muted:#5f8f5f;--border:#1a3a1a;--pb:#071007;--pt:#00ff41;--glow:0 0 20px rgba(0,255,65,.18);--onbtn:#04120a}
+[data-theme="light"]{--green:#15803d;--blue:#15803d;--grad:linear-gradient(135deg,#16a34a 0%,#15803d 100%);--bg:#f0fdf4;--surface:#fff;--text:#14532d;--muted:#5b7a63;--border:#bbf7d0;--pb:#f0fdf4;--pt:#166534;--glow:0 4px 20px rgba(22,163,74,.15);--onbtn:#fff}
+body{background:var(--bg);color:var(--text);transition:background .3s,color .3s}
+#mx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.07}
+[data-theme="light"] #mx{display:none}
+.site-header,.hero,.filters,.container,.social-section,.footer,#view-k{position:relative;z-index:1}
+.site-header{backdrop-filter:blur(10px)}
+.logo-badge{box-shadow:var(--glow)}
+.logo-badge span,.btn-copy,.new-badge,.fb.active,.fb:hover{color:var(--onbtn)}
+.search-wrap input:focus{box-shadow:0 0 0 3px rgba(0,255,65,.12)}
+.card:hover{box-shadow:var(--glow);border-color:var(--green)}
+.card-img{background:var(--pb)}
+.cat-badge{background:rgba(0,0,0,.75);border:1px solid var(--border)}
+[data-theme="light"] .cat-badge{background:rgba(255,255,255,.92)}
+.cat-badge.chatgpt,.cat-badge.gorsel,.cat-badge.minecraft,.cat-badge.aksiyon{color:var(--green)}
+.prompt-box{background:var(--pb);color:var(--pt);font-family:'Share Tech Mono','Courier New',monospace}
+.prompt-box:not(.expanded)::after{background:linear-gradient(transparent,var(--pb))}
+.btn-copy:hover{box-shadow:var(--glow)}
+.btn-copy.ok{background:linear-gradient(135deg,#00cc33,#008822);color:#04120a}
+.lightbox img{box-shadow:0 0 40px rgba(0,255,65,.25)}
+.theme-btn{position:fixed;bottom:22px;right:22px;z-index:999;width:46px;height:46px;border-radius:50%;border:2px solid var(--green);background:var(--surface);color:var(--green);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--glow);transition:all .2s}
+.theme-btn:hover{background:var(--green);color:var(--onbtn);transform:scale(1.1)}
+.tabs{display:flex;gap:8px;justify-content:center;margin:0 0 18px;position:relative;z-index:1}
+.tab{padding:9px 22px;border-radius:12px;border:1.5px solid var(--border);background:var(--surface);color:var(--muted);font:600 14px 'Inter',sans-serif;cursor:pointer;display:flex;align-items:center;gap:7px;transition:all .15s}
+.tab.active,.tab:hover{background:var(--grad);color:var(--onbtn);border-color:transparent}
+.howto{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--green);border-radius:12px;padding:18px 20px;margin-bottom:22px;font-size:13.5px;line-height:1.75;color:var(--muted)}
+.howto h3{font:700 15px 'Space Grotesk',sans-serif;color:var(--text);margin-bottom:8px}
+.howto code{font-family:'Share Tech Mono',monospace;color:var(--pt);background:var(--pb);padding:1px 7px;border-radius:5px}
+.kgroup{margin-bottom:30px}
+.kgroup h3{font:700 16px 'Space Grotesk',sans-serif;color:var(--green);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.kgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.kcard{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:13px 14px;display:flex;flex-direction:column;gap:6px;transition:border-color .2s,box-shadow .2s}
+.kcard:hover{border-color:var(--green);box-shadow:var(--glow)}
+.kcmd{font:600 14px 'Share Tech Mono',monospace;color:var(--pt)}
+.kdesc{font-size:12.5px;color:var(--muted);line-height:1.55;flex:1}
+.kbtn{padding:7px 0;border-radius:8px;border:none;background:var(--grad);color:var(--onbtn);font:600 12.5px 'Inter',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px}
+.kbtn.ok{background:linear-gradient(135deg,#00cc33,#008822)}
+@media(max-width:600px){.theme-btn{bottom:14px;right:14px;width:42px;height:42px}.kgrid{grid-template-columns:1fr}}
 
-  @media (prefers-reduced-motion: reduce) {
-    * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-  }
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" />
 </head>
 <body>
+<canvas id="mx"></canvas>
+<button class="theme-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Tema değiştir"><i class="ti ti-sun" id="themeIcon" aria-hidden="true"></i></button>
 
 <!-- HEADER -->
 <header class="site-header">
   <div class="logo">
-    <div class="logo-badge"><i class="ti ti-sparkles" aria-hidden="true"></i><span>ALİ MERT TEKİN</span></div>
+    <div class="logo-badge"><span>ALİ MERT TEKİN</span></div>
   </div>
   <div class="header-right">
     <span class="header-count" id="hcount"></span>
     <button class="theme-toggle" id="themeToggle" aria-label="Açık/koyu mod değiştir" title="Açık/koyu mod">
-      <span class="toggle-knob"><i class="ti ti-moon" id="toggleIcon" aria-hidden="true"></i></span>
+      <span class="toggle-knob"><i class="ti ti-bolt" id="toggleIcon" aria-hidden="true"></i></span>
     </button>
   </div>
 </header>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="eyebrow"><span class="amt-dot" aria-hidden="true"></span><span class="amt-text">AMT</span></div>
-  <h1>Prompt Kütüphanesi<span class="hero-sub">Hoş Geldiniz</span></h1>
-  <p class="lede">Videolardaki tüm promptlara buradan ulaş, örnek çıktıyı gör ve tek tıkla kopyala.</p>
+  <p class="prompt-line">system.init(prompt_library)<span class="cursor-blink"></span></p>
+  <h1>AI Prompt <span>Kütüphanesi</span></h1>
+  <p>Videolardaki tüm promptlara buradan ulaş, örnek çıktıyı gör ve tek tıkla kopyala.</p>
   <div class="search-wrap">
     <i class="ti ti-search s-ico" aria-hidden="true"></i>
-    <input type="text" id="search" placeholder="500+ prompt içerisinde ara..." oninput="render()" aria-label="Prompt ara" />
-  </div>
-  <div class="stat-row">
-    <div class="stat-card"><b>500+</b><span>Prompt</span></div>
-    <div class="stat-card"><b>15+</b><span>Kategori</span></div>
-    <div class="stat-card"><b>Her Hafta</b><span>Yeni İçerik</span></div>
-    <div class="stat-card"><b>Tek Tık</b><span>Kopyala</span></div>
+    <input type="text" id="search" placeholder="grep prompt..." oninput="render();renderK()" aria-label="Prompt ara" />
   </div>
 </section>
 
-<!-- FOLLOW STRIP (hero dışında) -->
-<div class="follow-strip">
-  <div class="follow-banner">
-    <i class="ti ti-brand-instagram" aria-hidden="true"></i>
-    Daha fazlası için <a href="https://www.instagram.com/alimerttekin0/" target="_blank" rel="noopener">takip etmeyi</a> unutma!
-  </div>
+<div class="tabs">
+  <button class="tab active" id="tab-p" onclick="setView('p')"><i class="ti ti-photo" aria-hidden="true"></i> Promptlar</button>
+  <button class="tab" id="tab-k" onclick="setView('k')"><i class="ti ti-terminal-2" aria-hidden="true"></i> ChatGPT Komutları</button>
 </div>
-
+<div id="view-p">
 <!-- FILTERS -->
 <div class="filters" role="group" aria-label="Kategori filtresi">
   <button class="fb active" onclick="setF('tümü', this)">Tümü</button>
-  <button class="fb" onclick="setF('ChatGPT', this)">✨ ChatGPT</button>
-  <button class="fb" onclick="setF('Görsel AI', this)">🎨 Görsel AI</button>
-  <button class="fb" onclick="setF('Minecraft', this)">🎮 Minecraft</button>
-  <button class="fb" onclick="setF('Aksiyon', this)">⚡ Aksiyon</button>
+  <button class="fb" onclick="setF('ChatGPT', this)">ChatGPT</button>
+  <button class="fb" onclick="setF('Görsel AI', this)">Görsel AI</button>
+  <button class="fb" onclick="setF('Minecraft', this)">Minecraft</button>
+  <button class="fb" onclick="setF('Aksiyon', this)">Aksiyon</button>
 </div>
-
-<!-- POPULAR -->
-<section class="popular-section">
-  <div class="popular-head">
-    <h2>🔥 En Popüler</h2>
-    <p>Bu hafta en çok kullanılan promptlar.</p>
-  </div>
-  <div class="popular-row" id="popularRow"></div>
-</section>
 
 <!-- MAIN -->
 <main class="container">
   <p class="stats" id="stats" aria-live="polite"></p>
   <div class="grid" id="grid"></div>
 </main>
+</div>
+<div id="view-k" class="container" style="display:none">
+  <div class="howto">
+    <h3>Bu Komutlar Nasıl Kullanılır?</h3>
+    Komutu yaz, fotoğrafını veya ürün görselini ekle (ya da yalnızca tarif et) ve Enter’a bas. Örneğin: <code>/headshot</code> komutunu selfie’nle, <code>/productshot</code> komutunu ürün fotoğrafınla, <code>/logoconcepts</code> komutunu marka adınla kullan.<br>
+    Özel yön vermek için komutun sonuna bir satır ekle: <code>/listicad for my coffee brand, dark green, headline: Wake Up Better</code><br>
+    İlk sonuçtan sonra “Aynısı ama daha geniş”, “Arka planı değiştir” veya “Üç farklı versiyon yap” diyerek devam edebilirsin.
+  </div>
+  <div class="filters" id="kchips" style="padding:0 0 20px"></div>
+  <div id="klist"></div>
+</div>
 
 <!-- SOCIAL -->
 <section class="social-section">
@@ -860,7 +726,7 @@
 
 <!-- FOOTER -->
 <footer class="footer">
-  <p>Ali Mert Tekin tarafından hazırlanmıştır <span>// prompt-library</span></p>
+  <p>Ali Mert Tekin tarafından hazırlanmıştır <span>// end_of_file</span></p>
 </footer>
 
 <!-- LIGHTBOX -->
@@ -883,7 +749,7 @@ function applyTheme(mode) {
     toggleIcon.className = 'ti ti-sun';
   } else {
     htmlEl.classList.remove('light');
-    toggleIcon.className = 'ti ti-moon';
+    toggleIcon.className = 'ti ti-bolt';
   }
 }
 
@@ -903,15 +769,6 @@ themeToggle.addEventListener('click', () => {
    doldur ve DATA dizisine ekle.
    ============================================================ */
 const DATA = [
-  {
-    title: "Saç Modeli Analizi",
-    desc: "Fotoğrafını analiz ederek yüz şekline en uygun saç modellerini yan yana karşılaştırmalı, minimal ve premium bir görsel rapor olarak sunuyor.",
-    cat: "ChatGPT",
-    ai: "ChatGPT / DALL-E",
-    isNew: true,
-    img: "https://i.ibb.co/3mydPtSK/2345321.jpg",
-    prompt: `Bu portreyi kullanarak temiz, modern bir saç modeli analiz görseli oluştur. Kişiye en çok hangi saç modellerinin yakıştığını vurgulamak için yan yana saç modeli karşılaştırmaları göster. Görsel odaklı olsun; yalnızca kısa etiketler kullan, paragraf kullanma. Minimal, premium bir stil kullan: nötr arka plan.`
-  },
   {
     title: "ChatGPT Selfie — Kadın mı Erkek mi?",
     desc: "ChatGPT'ye sanki cebinden yanlışlıkla çekilmiş doğal bir selfie çektiriyor. Gerçekçi hareket bulanıklığı, aşırı pozlama ve dağınık kadraj içeriyor.",
@@ -990,6 +847,15 @@ Negative Prompt: baja calidad, cara borrosa, cuerpo distorsionado, extremidades 
     isNew: false,
     img: "https://i.ibb.co/Mjf5wXH/BAD2-AE2-C-6-EC2-48-CD-BAE4-052517719663.png",
     prompt: `A calm businessman in a perfectly tailored black suit and tie, wearing dark sunglasses, sitting on a simple red folding chair in the middle of a barren desert, casually reading a newspaper while a vintage 1960s American convertible behind him is completely engulfed in massive flames and thick black smoke, graffiti-covered car, cinematic contrast between calm and chaos, luxury crisis aesthetic, dramatic fireball, photorealistic, ultra detailed, shallow depth of field, golden hour lighting, muted colors, editorial fashion photography, centered composition, 85mm lens, high dynamic range, masterpiece, award-winning photography, realistic textures, desert landscape, smoke volumetrics, movie still`
+  },
+  {
+    title: "Saç Modeli Analizi",
+    desc: "Fotoğrafını analiz ederek yüz şekline en uygun saç modellerini yan yana karşılaştırmalı, minimal ve premium bir görsel rapor olarak sunuyor.",
+    cat: "ChatGPT",
+    ai: "ChatGPT / DALL-E",
+    isNew: true,
+    img: "https://i.ibb.co/3mydPtSK/2345321.jpg",
+    prompt: `Bu portreyi kullanarak temiz, modern bir saç modeli analiz görseli oluştur. Kişiye en çok hangi saç modellerinin yakıştığını vurgulamak için yan yana saç modeli karşılaştırmaları göster. Görsel odaklı olsun; yalnızca kısa etiketler kullan, paragraf kullanma. Minimal, premium bir stil kullan: nötr arka plan.`
   }
 
   /* ── YENİ PROMPT EKLEMEK İÇİN BURAYA KOPYALA ──
@@ -1012,7 +878,6 @@ let activeF = 'tümü';
 
 function setF(f, btn) {
   activeF = f;
-  document.getElementById('search').value = '';
   document.querySelectorAll('.fb').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   render();
@@ -1026,6 +891,8 @@ function getFiltered() {
     return mc && mq;
   });
 }
+
+const catClass = { 'ChatGPT': 'chatgpt', 'Görsel AI': 'gorsel', 'Minecraft': 'minecraft', 'Aksiyon': 'aksiyon' };
 
 function render() {
   const list = getFiltered();
@@ -1053,14 +920,13 @@ function render() {
         <div class="ai-tag"><i class="ti ti-robot" aria-hidden="true"></i> ${p.ai}</div>
         <h2 class="card-title">${p.title}</h2>
         <p class="card-desc">${p.desc}</p>
-        <div class="prompt-label">Prompt Preview</div>
         <div class="prompt-box" id="pb${i}">${p.prompt.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g, '<br>')}</div>
         <div class="card-actions">
           <button class="btn-copy" id="bc${i}" onclick="copyP(${i})">
             <i class="ti ti-copy" aria-hidden="true"></i> Kopyala
           </button>
           <button class="btn-expand" id="be${i}" onclick="toggleExp(${i})" aria-label="Promptu genişlet">
-            <i class="ti ti-plus" aria-hidden="true"></i>
+            <i class="ti ti-chevron-down" aria-hidden="true"></i>
           </button>
         </div>
       </div>
@@ -1103,25 +969,157 @@ function closeLb() {
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
 
-/* ============================================================
-   EN POPÜLER — statik öne çıkan promptlar şeridi
-   Aramayı/filtreyi etkilemez; tıklanınca ilgili promptu arar.
-   ============================================================ */
-function renderPopular() {
-  const picks = DATA.slice(0, 3);
-  document.getElementById('popularRow').innerHTML = picks.map(p => `
-    <div class="popular-card" onclick="document.getElementById('search').value='${p.title.replace(/'/g, "\\'")}'; render(); document.querySelector('.container').scrollIntoView({behavior:'smooth'});">
-      <img src="${p.img}" alt="${p.title}" loading="lazy" />
-      <div>
-        <div class="p-title">${p.title}</div>
-        <span class="p-cat">${p.cat}</span>
-      </div>
-    </div>
-  `).join('');
-}
-
 render();
-renderPopular();
+
+/* ═══ MATRIX YAĞMURU ═══ */
+const mx=document.getElementById('mx'),mc=mx.getContext('2d');let drops=[];
+function initMx(){mx.width=innerWidth;mx.height=innerHeight;drops=Array(Math.floor(mx.width/16)).fill(1)}
+function drawMx(){if(document.documentElement.dataset.theme==='light')return;
+mc.fillStyle='rgba(0,0,0,.06)';mc.fillRect(0,0,mx.width,mx.height);mc.fillStyle='#00ff41';mc.font='14px Share Tech Mono, monospace';
+drops.forEach((y,i)=>{mc.fillText(String.fromCharCode(0x30A0+Math.random()*96),i*16,y*16);if(y*16>mx.height&&Math.random()>.975)drops[i]=0;drops[i]++})}
+initMx();addEventListener('resize',initMx);setInterval(drawMx,50);
+
+/* ═══ KARANLIK / AYDINLIK MOD ═══ */
+function setTheme(t){document.documentElement.dataset.theme=t;
+document.getElementById('themeIcon').className=t==='light'?'ti ti-moon':'ti ti-sun';
+if(t==='light')mc.clearRect(0,0,mx.width,mx.height);
+try{localStorage.setItem('theme',t)}catch(e){}}
+function toggleTheme(){setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark')}
+try{const s=localStorage.getItem('theme');if(s)setTheme(s)}catch(e){}
+
+/* ═══ SEKMELER ═══ */
+function setView(v){
+document.getElementById('view-p').style.display=v==='p'?'':'none';
+document.getElementById('view-k').style.display=v==='k'?'':'none';
+document.getElementById('tab-p').classList.toggle('active',v==='p');
+document.getElementById('tab-k').classList.toggle('active',v==='k');}
+
+/* ═══ CHATGPT KOMUTLARI ═══
+   Yeni komut eklemek için KRAW içine "/komut|Açıklama" satırı ekle.
+   Yeni bölüm için "# Bölüm Adı" satırı yaz. */
+const KRAW=`# Sosyal Medya Görselleri
+/thumbnailimage|Büyük yüz görseli ve metin içeren dikkat çekici YouTube küçük resmi
+/carouselcover|Kaydırırken dikkat çeken Instagram kaydırmalı gönderi kapağı
+/quotecard|Marka tarzında, paylaşılabilir alıntı görseli
+/instagrid|Bir arada uyumlu görünen dokuz Instagram gönderisi
+/storycover|Instagram öne çıkan hikâyeler için kapak simgeleri
+/linkedinbanner|Doğru ölçülerde LinkedIn profil kapak görseli
+/youtubebanner|Güvenli görünüm alanları dikkate alınmış YouTube kanal kapağı
+/twitterheader|X profili için kapak görseli
+/pinterestpin|Başlık metni içeren dikey Pinterest görseli
+/tiktokcover|Büyük ve okunaklı metin içeren TikTok video kapağı
+/memeformat|Fikrini sade bir meme düzenine dönüştüren görsel
+/announcementpost|Ürün lansmanı veya haber duyurusu görseli
+/eventflyer|Tarih, yer ve başlık içeren etkinlik afişi
+/countdownpost|"3 gün, 2 gün, 1 gün" şeklinde geri sayım görseli
+/statgraphic|Büyük bir sayı ve kısa açıklama içeren istatistik görseli
+/podcastcover|Program adıyla birlikte kare podcast kapağı
+/profilepic|Farklı boyutlarda tanınabilir, temiz profil fotoğrafı
+/reelcover|Profil akışınla uyumlu Reels kapak görseli
+# Eğlenceli ve Kişisel Görseller
+/actionfigure|Seni kutulu bir koleksiyon figürü olarak gösterir
+/movieposter|Seni büyük bir filmin afişine yerleştirir
+/magazinecover|Seni adını belirlediğin bir derginin kapağına koyar
+/tradingcard|Özelliklerinin ve istatistiklerinin yazdığı koleksiyon kartını oluşturur
+/petportrait|Evcil hayvanını kraliyet portresi tarzında resmeder
+/ageprogression|Seni 20, 40, 60 ve 80 yaşlarında gösterir
+/timetravel|Seni seçtiğin bir dönemin içine yerleştirir
+/superhero|Seni özgün bir kostümle süper kahraman olarak gösterir
+/babyphoto|Yeni doğan bebek duyurusu için fotoğraflı kart hazırlar
+/weddinginvite|Tasarlanmış bir düğün davetiyesi oluşturur
+/holidaycard|Fotoğrafınla aile tatili veya bayram kartı hazırlar
+/caricature|Seni sevimli, abartılı bir karikatür olarak çizer
+/dreamcar|Seni seçtiğin bir arabanın yanında, istediğin konumda gösterir
+/fantasyme|Seni kostümüyle birlikte bir fantastik dünya karakterine dönüştürür
+# Yemek, İç Mekân ve Gayrimenkul
+/foodshot|İstediğin yemeğin restoran kalitesinde fotoğrafı
+/menuphoto|Düzenli bir sunumla, üstten çekilmiş menü fotoğrafı
+/drinkshot|Üzerinde buğu veya damlacıklar bulunan kokteyl ya da kahve görseli
+/recipecard|Bitmiş yemeğin de yer aldığı görsel tarif kartı
+/roomredesign|Odanın, belirttiğin tarza göre yeniden tasarlanmış hâli
+/virtualstaging|Boş bir odanın ilan fotoğrafı için mobilyalarla döşenmiş hâli
+/exteriorrender|Bir evin dış cephesini öne çıkaran mimari görsel
+/floorplan3d|Çizim veya açıklamadan üç boyutlu kat planı
+/gardenplan|Arka bahçenin peyzaj düzenlemesi yapılmış hâli
+/kitchenreno|Mutfağının yeni dolap ve tezgâhlarla yenilenmiş hâli
+/listingphoto|Herhangi bir odanın aydınlık, geniş açılı emlak ilanı fotoğrafı
+/officespace|Çalışma alanının odaklanmayı destekleyecek biçimde yeniden tasarımı
+/nightshot|Aynı binanın gün batımında, ışıkları açıkken görünümü
+/moodboard|Bir mekân veya proje için hazırlanmış stil panosu
+# İnfografikler ve Açıklayıcı Görseller
+/infographic|Önemli noktalarını düzenli biçimde gösteren bir infografik
+/processdiagram|Bir sürecin nasıl işlediğini dört adımda anlatan şema
+/comparisonchart|İki seçeneği yan yana gösteren karşılaştırma görseli
+/statposter|Büyük sayılar ve simgeler içeren veri posteri
+/timelineposter|Şirketinin veya bir hikâyenin zaman çizelgesi
+/iconset|Uygulaman veya siten için birbiriyle uyumlu 12 simge
+/mapgraphic|Belirlediğin konumların işaretlendiği harita görseli
+/orgchart|Fotoğraf alanları bulunan görsel organizasyon şeması
+/roadmapgraphic|Çeyreklere ayrılmış ürün yol haritası
+/pricingtable|Üç paketli, tasarlanmış fiyatlandırma tablosu
+/checklistgraphic|Yazdırılabilir görsel kontrol listesi
+/howtoillustration|Bir görevin nasıl yapılacağını çizimlerle gösteren paneller
+/anatomyof|Seçtiğin bir şeyin parçalarını etiketlerle açıklayan görsel
+/slidevisual|Madde işaretleri kullanmadan hazırlanmış tek bir sunum slaytı
+# İllüstrasyon ve Sanat Tarzları
+/watercolor|Konunun serbest fırça darbeleriyle yapılmış suluboya resmi
+/oilpainting|Fırça izleri görünen klasik yağlı boya resmi
+/pixelart|Retro, 16 bit piksel sanatı versiyonu
+/lineart|Tek çizgi hissi veren sade, siyah mürekkep çizimi
+/popart|Belirgin renkler ve noktalı baskı dokusuyla pop art posteri
+/anime|Konunun anime tarzı illüstrasyonu
+/cartoonme|Seni sade bir çizgi film karakteri olarak çizer
+/3dcharacter|Konunun stilize edilmiş üç boyutlu karakteri
+/papercut|Katmanlı kâğıt kesme tekniğiyle hazırlanmış illüstrasyon
+/stainedglass|Konunun vitray pencere tarzında görseli
+/tattoodesign|Temiz bir sayfada, şablona dönüştürmeye hazır dövme tasarımı
+/childrensbook|Yumuşak tonlarda çocuk kitabı illüstrasyonu
+/graffiti|Kelimeni veya logonu duvar üzerinde grafiti olarak yazar
+/vectorflat|Basit şekillerden oluşan düz vektör illüstrasyon
+/sketchbook|Hafif gölgelendirilmiş kurşun kalem eskizi
+/lowpoly|Az sayıda çokgenden oluşan geometrik 3D illüstrasyon
+/claymation|Stop motion kil animasyonu görünümü
+/embroidery|Tasarımını işlemeli kumaş arma olarak gösterir
+# Markalaşma ve Logolar
+/logoconcepts|Marka adın için altı farklı logo tasarım yönü
+/wordmark|Yazı tipine dayalı, sade bir kelime logosu
+/iconlogo|Yalnızca simgeden oluşan basit bir logo
+/mascotdesign|Markana kişilik katan bir maskot karakteri
+/brandboard|Logo, renkler, yazı tipleri ve görselleri içeren marka panosu
+/colorpalette|HEX kodlarıyla birlikte beş renkli palet
+/patterndesign|Ambalaj ve baskıda kullanılabilecek tekrarlı marka deseni
+/businesscard|Ön ve arka yüzü gösteren kartvizit taslağı
+/letterhead|Markalı antetli kâğıt ve zarf seti
+/brandmerch|Logonun tişört, şapka, kupa ve çanta üzerindeki görünümü
+/storefront|Markanın gerçek bir mağaza tabelası ve vitrini üzerindeki görünümü
+/appicon|iOS ve Android tarzlarında uygulama simgesi
+/favicon|Logonun küçük boyutta okunabilen favicon sürümü
+/monogram|Baş harflerden oluşan zarif bir monogram
+/logomotion|Logonun nasıl hareketlendirilebileceğini gösteren ana kareler
+/rebrand|Mevcut logonun üç farklı yönde modernleştirilmiş hâli
+`;
+const KG=[];let kc=null;
+KRAW.trim().split('\n').forEach(l=>{l=l.trim();if(!l)return;
+if(l[0]==='#'){kc={name:l.slice(1).trim(),items:[]};KG.push(kc)}
+else{const a=l.split('|');kc.items.push({c:a[0],d:a.slice(1).join('|')})}});
+let kAct='tümü';
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+function setK(g,b){kAct=g;document.querySelectorAll('#kchips .fb').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderK()}
+function renderK(){
+const q=document.getElementById('search').value.toLowerCase();
+const ch=document.getElementById('kchips');
+if(!ch.dataset.done){ch.dataset.done=1;
+ch.innerHTML='<button class="fb active" onclick="setK(\'tümü\',this)">Tümü</button>'+KG.map((g,i)=>'<button class="fb" onclick="setK('+i+',this)">'+esc(g.name)+'</button>').join('')}
+let html='',n=0;
+KG.forEach((g,i)=>{if(kAct!=='tümü'&&kAct!==i)return;
+const it=g.items.filter(x=>!q||x.c.toLowerCase().includes(q)||x.d.toLowerCase().includes(q));
+if(!it.length)return;n+=it.length;
+html+='<div class="kgroup"><h3><i class="ti ti-terminal-2" aria-hidden="true"></i>'+esc(g.name)+'</h3><div class="kgrid">'+
+it.map(x=>'<div class="kcard"><div class="kcmd">'+esc(x.c)+'</div><div class="kdesc">'+esc(x.d)+'</div><button class="kbtn" onclick="copyK(this,\''+x.c+'\')"><i class="ti ti-copy" aria-hidden="true"></i> Kopyala</button></div>').join('')+'</div></div>'});
+document.getElementById('klist').innerHTML=html||'<div class="empty"><i class="ti ti-search-off" aria-hidden="true"></i>Komut bulunamadı.</div>'}
+function copyK(b,c){navigator.clipboard.writeText(c).then(()=>{b.classList.add('ok');b.innerHTML='<i class="ti ti-check" aria-hidden="true"></i> Kopyalandı!';
+setTimeout(()=>{b.classList.remove('ok');b.innerHTML='<i class="ti ti-copy" aria-hidden="true"></i> Kopyala'},2200)})}
+renderK();
 </script>
 </body>
 </html>
